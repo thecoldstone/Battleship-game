@@ -1,0 +1,19 @@
+Contributors: Nikita Zhukov, up201911348@fc.up.pt
+              Diogo Gomes, up201505676@fc.up.pt
+
+The project from CC2013
+
+The rules:
+    - a) Board - Diogo 
+    - b) Quad Tree Data Structure - Nikita  
+
+The current questions:
+    - Could we implement a bitmap by two dimensial array, 
+    where each index has four following options (0 = empty, 
+    1 = piece without being hitted, 2 = piece hitted, 3 = missed shot)?
+    
+    
+
+
+
+              
