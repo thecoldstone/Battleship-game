@@ -4,11 +4,21 @@
  * @author Nikita Zhukov
  **/
 
+#ifndef _BOARD_H
+#define _BOARD_H
+
+#include<stdbool.h>
+
 typedef struct board{
     int size;
-    int **array;
+    int **array; // TODO <- Should be more complex 
 } Board;
 
 /**Future functions**/
 Board boardInit(int);
+bool boardIsHitted(Board, int, int);
+Board boardShoot(int, int);
+Board boardPrint(Board);
 Board boardDestroy(int);
+
+#endif

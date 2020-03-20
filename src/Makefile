@@ -1,7 +1,7 @@
 CC = gcc
-CFLAGS = -lpthread
-SRC = main.c
-OBJ = main
+CFLAGS =  -std=c99
+SRC = *.c
+OBJ = main 
 
 build:
 	$(CC) $(CFLAGS) $(SRC) -o $(OBJ) 
