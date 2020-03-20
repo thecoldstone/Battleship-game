@@ -3,30 +3,64 @@ Contributors: Nikita Zhukov, up201911348@fc.up.pt
 
 The project from CC2013
 
+//TODO
+The deadlines:
+    - a) ...
+    - b) ...
+    - c) ...
+    - d) ...
+
 The rules:
-    - a) Board - Diogo 
-    - b) Quad Tree Data Structure - Nikita      
+    - a) Board - Diogo, Nikita
+    - b) Quad Tree Data Structure - Nikita
+    - c) ...
+    - d) ...      
 
 The current questions:
     
-    - Could we implement a bitmap by two dimensial array, 
+    Question 1:
+    - Could we implement a bitmap by two dimensional array, 
     where each index has four following options (states) (0 = empty, 
     1 = piece without being hitted, 2 = piece hitted, 3 = missed shot)?
 
         - Each pixel(index) of a board will contain information if there is a ship or not,
         basically 0 or 1, false or true resp.?
-    
-    - Between ships should be at least one pixel distance?
 
+        - What is bitmap in your interpretation? Is it two dimensional array with 0/1 values?
+
+        Quote from task: 
+        - "The maximum piece size is a 5x5, 
+        and should use a bitmap as the canonical form (the default shape of the piece). 
+        All pixels must be adjects to each other, i.e., 
+        every pixel must be connected to at least another pixel." 
+
+            - Could you explain which data Structure we could use for representing board? It's a bit confusing task.
+    
+    Question 2:
+    - Between ships should be at least one pixel distance? 
+
+    Question 3:
+    - What does it mean piece in your interpretation of task? Is it a ship or a cell(index of matrix)?
+
+    Question 4:
     - The idea of the flow of program is:
         
         1. Board
             1.1. UserOne initialize the size of board (from 20x20 to 40x40)
             1.2. UserOne chose the location of their ships
             1.3. UserOne let UserTwo to do the previous step
-            1.4. Once two boards are completed new empty board(matrix) appers
-        2. 
-        
+            1.4. Once two boards are completed new empty board(matrix) appears
+        2. Logic
+            ActivePlayer=UserOne
+            
+            2.1 UserOne or UserTwo types the coordinates to make the shoot
+                2.1.1 If he miss: ActivePlayer = UserTwo or UserOne
+                2.1.2 ActivePlayer tries again
+            
+        THE QUESTION IS: If it's suitable idea for implmenting the game logic?
+
+
+
 
 
 
