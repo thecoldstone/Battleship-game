@@ -18,7 +18,7 @@ typedef struct board{
 Board boardInit(int);
 bool boardIsHitted(Board, int, int);
 Board boardShoot(int, int);
-Board boardPrint(Board);
+void boardPrint(Board);
 Board boardDestroy(int);
 
 #endif
