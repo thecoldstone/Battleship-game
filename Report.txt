@@ -5,14 +5,28 @@ The project from CC2013
 
 The rules:
     - a) Board - Diogo 
-    - b) Quad Tree Data Structure - Nikita  
+    - b) Quad Tree Data Structure - Nikita      
 
 The current questions:
+    
     - Could we implement a bitmap by two dimensial array, 
-    where each index has four following options (0 = empty, 
+    where each index has four following options (states) (0 = empty, 
     1 = piece without being hitted, 2 = piece hitted, 3 = missed shot)?
+
+        - Each pixel(index) of a board will contain information if there is a ship or not,
+        basically 0 or 1, false or true resp.?
     
-    
+    - Between ships should be at least one pixel distance?
+
+    - The idea of the flow of program is:
+        
+        1. Board
+            1.1. UserOne initialize the size of board (from 20x20 to 40x40)
+            1.2. UserOne chose the location of their ships
+            1.3. UserOne let UserTwo to do the previous step
+            1.4. Once two boards are completed new empty board(matrix) appers
+        2. 
+        
 
 
 
