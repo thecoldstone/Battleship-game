@@ -29,9 +29,5 @@ int initProgram(int sizeOfBoard){
     /* Deallocate everything at the end of game */
     boardDestroy(newBoard);
 
-    if(*newBoard == NULL) {
-        printf("Empty\n");
-    }
-
     return status;
 }

@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 #include "board.h" 
 
 /**
@@ -47,6 +48,7 @@ Cell** boardInit(int size) {
  * @param board
  */ 
 void boardPrint(Cell** board) {
+    assert(board != NULL);
 
     for(int i = 0; i < (**(board)).size; i++) {
         for(int j = 0; j < (**(board)).size; j++) {
@@ -78,9 +80,12 @@ void boardPrint(Cell** board) {
  */ 
 void boardDestroy(Cell** board) {
     
-    for(int i = 0; i < (**(board)).size; i++) {
+    for(int i = (**(board)).size; 0 < i; i--) {
         free(board[i]);
+        board[i] = NULL;
     }
 
-    // free(board);
+    free(board);
+
+    board = NULL;
 }
