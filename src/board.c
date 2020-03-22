@@ -51,7 +51,21 @@ void boardPrint(Cell** board) {
     for(int i = 0; i < (**(board)).size; i++) {
         for(int j = 0; j < (**(board)).size; j++) {
             printf("|");
-            printf("%d", board[i][j].state);
+
+
+            switch (board[i][j].state)
+            {
+            case HIT:
+                // printf();
+                break;
+            case MISS:
+                // printf();
+                break;    
+            default:
+                printf(BLUE"~"RESET_COLOR);
+                break;
+            }
+
         }
         printf("|\n");
     }

@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS =  -std=c99 -Werror -Wextra -Wall -pedantic
+CFLAGS =  -std=c99 -Werror -Wextra -Wall -pedantic 
 SRC = *.c
 OBJ = main 
 

@@ -8,6 +8,10 @@
 #ifndef _BOARD_H
 #define _BOARD_H
 
+//Colors
+#define RESET_COLOR "\x1B[0m"
+#define BLUE "\x1B[34m"
+
 #include<stdbool.h>
 
 /* Board -> | * | * |
@@ -43,7 +47,8 @@ typedef struct tCoordinates{
 
 typedef struct tCell{
     int size;
-    State state;      
+    State state;
+    Ship ship; // ?     
     Coordinates location; 
 } Cell;
 
