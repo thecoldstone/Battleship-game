@@ -47,8 +47,7 @@ typedef struct tCoordinates{
 
 typedef struct tCell{
     int size;
-    State state;
-    Ship ship; // ?     
+    State state;   
     Coordinates location; 
 } Cell;
 
