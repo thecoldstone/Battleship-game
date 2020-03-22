@@ -14,7 +14,12 @@ The rules:
     - a) Board - Diogo, Nikita
     - b) Quad Tree Data Structure - Nikita
     - c) ...
-    - d) ...      
+    - d) ...  
+
+The structure of calling failes:
+    - main.c
+        - program.c
+            - ...        
 
 The current questions:
     
