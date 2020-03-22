@@ -82,5 +82,5 @@ void boardDestroy(Cell** board) {
         free(board[i]);
     }
 
-    free(board);
+    // free(board);
 }
