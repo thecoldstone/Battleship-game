@@ -1,24 +1,26 @@
 /**
  * @file board.h
- * @brief The structures used for board
- * @author Nikita Zhukov
+ * @author Diogo Gomes
  **/
 
-#ifndef _BOARD_H
-#define _BOARD_H
 
-#include<stdbool.h>
-
-typedef struct board{
-    int size;
-    int **array; // TODO <- Should be more complex 
+/*
+typedef struct {
+	int **board;
+	int size;
 } Board;
+*/
 
-/**Future functions**/
+typedef struct{
+	int state;
+} Cell;
+
+/*
 Board boardInit(int);
-bool boardIsHitted(Board, int, int);
-Board boardShoot(int, int);
-Board boardPrint(Board);
-Board boardDestroy(int);
+void printBoard(Board);
+Board play(Board, int, int);
+*/
 
-#endif
+Cell** createBoard(int);
+void printCell(Cell**, int);
+Cell** atack(Cell**, int, int);
