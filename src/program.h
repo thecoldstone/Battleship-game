@@ -1,17 +1,23 @@
 /**
- * @file Header of run.c 
- * @brief API for run program
+ * @file Header of program.c 
  * @author Nikita Zhukov
  * @date 21.03.20
  * 
 */
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<ctype.h>
-#include"board.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "battleship.h"
 
-/***Initialization***/
-int initProgram();
-void initShips(Cell**);
+/**
+ * @brief Initialize boards
+ */ 
+void initProgram();
+
+/**
+ * @brief Initalize ships
+ * 
+ * @param board - User's board
+ */ 
+void initShips(Cell** board);

@@ -6,6 +6,6 @@
  * 
 */
 
-//TODO
+// bool isSuccessAllocation(void* item);
 
 void callError(int);

@@ -1,5 +1,5 @@
 /**
- * @file run.c 
+ * @file program.c 
  * @brief Implementation of API to run the program
  * @author Nikita Zhukov
  * @date 21.03.20
@@ -77,9 +77,7 @@ void processStartInput(){
 
 }
 
-int initProgram(){
-
-    int status = 0;
+void initProgram(){
 
     /******INPUT******/
     // processStartInput();
@@ -101,5 +99,4 @@ int initProgram(){
     boardDestroy(BoardUserOne);
     // boardDestroy(BoardUserTwo);
 
-    return status;
 }

@@ -18,24 +18,8 @@
 int BOARD_SIZE; 
 int NUMBER_OF_SHIPS;
 
-//Ship characteristics
-int BITMAP_SIZE; 
-
 #include<stdbool.h>
-
-typedef enum {
-    MONOMINO      = 0,
-    DOMINO        = 1,
-    TROMINO       = 2,
-    T_TETROMINO   = 3,
-    L_TETROMINO   = 4
-} tTypeShip;
-
-typedef struct tShip{
-    int type;
-    int size;
-    char **bitmap;
-} Ship;
+#include"ship.h"
 
 typedef enum tState{
     NO_SHOOT = 0,
@@ -54,31 +38,24 @@ typedef struct tCell{
     bool isBorder;   
 } Cell;
 
-/**********************Board***********************/
+/**
+ * @brief Initialize the board
+ * @param size - the size of board (n x n)
+ * @return two dimensional board
+ */ 
 Cell** boardInit(int);
-bool boardIsHitted(Cell**, int, int);
-Cell boardShoot(int, int);
-void boardPrint(Cell**);
-void boardDestroy(Cell**);
 
-/**********************Ship***********************/
 
 /**
- * @brief Function to insert ship into the board
- * 
- * @param board - User's board
- * @param type  - Type of the ship 
- * @param x, y  - x and y coordinates on a board
- * @param rotation - Rotation factor
- */
-bool setShip(Cell**, tTypeShip, int, int, int);
+ * @brief Print out the board
+ * @param board
+ */ 
+void boardPrint(Cell**);
 
-bool isOccupied(Cell**, int, int);
-bool isPossible();
-bool isRotatable(Cell**, tTypeShip, int, int);
-Ship* shipCreate(tTypeShip);
-void shipRotate(Ship*, int);
-void destroyShip(Ship*);
-void shipPrint(Ship*);
+/**
+ * @brief Destroy the board
+ * @param board 
+ */ 
+void boardDestroy(Cell**);
 
 #endif

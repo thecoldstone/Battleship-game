@@ -6,7 +6,12 @@
  * 
 */
 
-//TODO
+#include <stdio.h>
+#include <stdbool.h>
+
+// bool isSuccessAllocation(void* item) {
+//     return (item != NULL ? 1 : 0);
+// }
 
 void callError(int type) {
     (void) type;
