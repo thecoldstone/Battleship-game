@@ -1,11 +1,11 @@
 CC = gcc
-CFLAGS =  -std=c99 -Werror -Wextra -Wall -pedantic 
+CFLAGS =  -std=c99 -g 
 SRC = *.c
-OBJ = main 
+OBJ = main
 
 build:
-	$(CC) $(CFLAGS) $(SRC) -o $(OBJ) 
+	$(CC) $(CFLAGS) -o $(OBJ)  $(SRC)
 		
 clean:
 	rm $(OBJ)
-	rm -rf *.dSym
+	rm -rf *.dSYM

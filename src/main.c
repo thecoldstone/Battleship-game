@@ -10,17 +10,22 @@
 
 int main() 
 { 
-    int size;
+    // printf("\nThe maximum number of ships [%d * %d/ 25]\n", size, size);
+    // printf("Enter the number of ships: ");
+    // if(!scanf("%d", &numOfShips)){
+    //     fprintf(stderr, "[ERROR] Input is incorrect\n");
+    //     printf("[ADVICE] Type please number\n\n");
+    //     exit(2); // Incorrect input 
+    // }
 
-    printf("Enter the size of board: ");
-    //If scanf is failed -> Program is terminated
-    if(!scanf("%d", &size)){
-        fprintf(stderr, "[ERROR] Input is incorrect\n");
-        printf("[ADVICE] Type please number\n\n");
-        exit(2);
-    }
+    // if(size * size / 25  < numOfShips) {
+    //     fprintf(stderr, "[ERROR] The maximum number of ships for %dx%d board is %d\n", size, size, size*size/25);
+    //     exit(3); // Incorrect input [The number of boat]
+    // } 
     
-    int status = initProgram(size);
+   
+
+    int status = initProgram();
 
     // Idea to handle the errors in program
     switch (status)

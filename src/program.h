@@ -8,6 +8,10 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
 #include"board.h"
 
-int initProgram(int);
+/***Initialization***/
+int initProgram();
+void initShips(Cell**);

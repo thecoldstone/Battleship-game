@@ -11,27 +11,30 @@
 //Colors
 #define RESET_COLOR "\x1B[0m"
 #define BLUE "\x1B[34m"
+#define RED  "\x1B[0;31m"
+#define CYAN "\x1B[0;36m"
+
+//Board characteristics
+int BOARD_SIZE; 
+int NUMBER_OF_SHIPS;
+
+//Ship characteristics
+int BITMAP_SIZE; 
 
 #include<stdbool.h>
 
-/* Board -> | * | * |
-            | * | * |  
-*/  
-
-/* 
-    | * | < - Cell 
-*/
-
-/*
-    | *S |
-    | *H |
-    | *I |
-    | *P |
-*/
+typedef enum {
+    MONOMINO      = 0,
+    DOMINO        = 1,
+    TROMINO       = 2,
+    T_TETROMINO   = 3,
+    L_TETROMINO   = 4
+} tTypeShip;
 
 typedef struct tShip{
+    int type;
     int size;
-    int **location;
+    char **bitmap;
 } Ship;
 
 typedef enum tState{
@@ -46,16 +49,36 @@ typedef struct tCoordinates{
 } Coordinates;
 
 typedef struct tCell{
-    int size;
-    State state;   
-    Coordinates location; 
+    Ship *ship;
+    State state;
+    bool isBorder;   
 } Cell;
 
-/**Future functions**/
+/**********************Board***********************/
 Cell** boardInit(int);
 bool boardIsHitted(Cell**, int, int);
 Cell boardShoot(int, int);
 void boardPrint(Cell**);
 void boardDestroy(Cell**);
+
+/**********************Ship***********************/
+
+/**
+ * @brief Function to insert ship into the board
+ * 
+ * @param board - User's board
+ * @param type  - Type of the ship 
+ * @param x, y  - x and y coordinates on a board
+ * @param rotation - Rotation factor
+ */
+bool setShip(Cell**, tTypeShip, int, int, int);
+
+bool isOccupied(Cell**, int, int);
+bool isPossible();
+bool isRotatable(Cell**, tTypeShip, int, int);
+Ship* shipCreate(tTypeShip);
+void shipRotate(Ship*, int);
+void destroyShip(Ship*);
+void shipPrint(Ship*);
 
 #endif
