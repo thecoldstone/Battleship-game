@@ -11,7 +11,7 @@
 #include "battleship.h"
 
 bool isOccupied(Cell** board, int x, int y){
-    return (board[x][y].ship != NULL);
+    return (board[x][y].ship != NULL || board[x][y].isBorder);
 }
 
 bool isOutOfBoard(int i){
@@ -27,6 +27,10 @@ void deleteFailedShip(Cell** board, Coordinates* coord){
             break;
         }
 
+        if(coord[i].x == 0 && coord[i].y == 0){
+            printf("HERE! %d\n", i);
+        }
+
         board[coord[i].x][coord[i].y].ship = NULL;
     }
 
@@ -36,30 +40,95 @@ bool isItBorder(Cell** board, int x, int y){
     return board[x][y].isBorder != false;
 }
 
-void setBorder(Cell** board, int x, int y){
+bool isNeighbour(Cell** board, int x, int y){
     
-    if(!isOutOfBoard(x - 1)){
-        board[x - 1][y].isBorder = true;
+    bool itIsNeighbour = false;
+
+    if(!isOutOfBoard(x - 1) && !itIsNeighbour){
+        itIsNeighbour = isItBorder(board, x - 1, y);
     }
 
-    if(!isOutOfBoard(y - 1)){
-        board[x][y - 1].isBorder = true;
+    if(!isOutOfBoard(y - 1) && !itIsNeighbour){
+        itIsNeighbour = isItBorder(board, x, y - 1);
     }
 
-    if(!isOutOfBoard(x + 1)){
-        board[x + 1][y].isBorder = true;
+    if(!isOutOfBoard(x - 1) && !isOutOfBoard(y - 1) && !itIsNeighbour){
+        itIsNeighbour = isItBorder(board, x - 1, y - 1);
     }
 
-    if(!isOutOfBoard(y + 1)){
-        board[x][y+1].isBorder = true;
+    if(!isOutOfBoard(x + 1) && !isOutOfBoard(y) && !itIsNeighbour){
+        itIsNeighbour = isItBorder(board, x + 1, y);
     }
 
-    if(!isOutOfBoard(x + 1) && !isOutOfBoard(y + 1)){
-        board[x + 1][y + 1].isBorder = true; 
-    } 
+    if(!isOutOfBoard(x) && !isOutOfBoard(y + 1) && !itIsNeighbour){
+        itIsNeighbour = isItBorder(board, x, y + 1);
+    }
 
-    if(!isOutOfBoard(x - 1) && !isOutOfBoard(y - 1)){
-        board[x - 1][y - 1].isBorder = true; 
+    if(!isOutOfBoard(x + 1) && !isOutOfBoard(y + 1) && !itIsNeighbour){
+        itIsNeighbour = isItBorder(board, x + 1, y + 1);
+    }    
+
+    return itIsNeighbour;
+
+}
+
+void setBorder(Cell** board, Coordinates* coordOfTheShip){
+
+    for(int i = 0; i < BITMAP_SIZE + 1; i++){
+
+        int x = coordOfTheShip[i].x;
+        int y = coordOfTheShip[i].y;
+        
+        //Stopper
+        if(x == -1) {
+            break;
+        }
+
+        if(!isOutOfBoard(x - 1) && !isItBorder(board, x - 1, y)){
+            board[x - 1][y].isBorder = true;
+        }
+
+        if(!isOutOfBoard(y - 1) && !isItBorder(board, x, y - 1)){
+           board[x][y - 1].isBorder = true;
+        }
+
+        if(!isOutOfBoard(x - 1) && !isOutOfBoard(y - 1) && !isItBorder(board, x - 1, y - 1)){
+            board[x - 1][y - 1].isBorder = true;
+        }
+
+        if(!isOutOfBoard(x + 1) && !isOutOfBoard(y) && !isItBorder(board, x + 1, y)){
+            board[x + 1][y].isBorder = true;
+        }
+
+        if(!isOutOfBoard(x) && !isOutOfBoard(y + 1) && !isItBorder(board, x, y + 1)){
+            board[x][y + 1].isBorder = true;
+        }
+
+        if(!isOutOfBoard(x + 1) && !isOutOfBoard(y + 1) && !isItBorder(board, x + 1, y + 1)){
+            board[x + 1][y + 1].isBorder = true;
+        }    
+
+        if(!isOutOfBoard(x - 1) && !isOutOfBoard(y + 1) && !isItBorder(board, x - 1, y + 1)){
+            board[x - 1][y + 1].isBorder = true;
+        }
+
+        if(!isOutOfBoard(x + 1) && !isOutOfBoard(y - 1) && !isItBorder(board, x + 1, y - 1)){
+            board[x + 1][y - 1].isBorder = true;
+        }
+
+    }
+    
+    for(int i = 0; i < BITMAP_SIZE + 1; i++){
+        
+        //Stopper
+        if(coordOfTheShip[i].x == -1) {
+            break;
+        }
+
+        if(board[coordOfTheShip[i].x][coordOfTheShip[i].y].isBorder){
+            board[coordOfTheShip[i].x][coordOfTheShip[i].y].isBorder = false;
+        }
+
     }
 
 }
@@ -68,7 +137,9 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
 
     int x_ship, y_ship;
     //Coordinates are used to delete pointers to the ship if the insertion failed
-    Coordinates* coordToFree = (Coordinates*) malloc(sizeof(Coordinates) * (BITMAP_SIZE));
+    //OR
+    //To set borders if insertion has been successful 
+    Coordinates* coordToFree = (Coordinates*) malloc(sizeof(Coordinates) * (BITMAP_SIZE + 1));
 
     //Check allocation
     if(!coordToFree){
@@ -78,7 +149,7 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
 
     int indexCoord = 0;
 
-    if(isOccupied(board, x, y) || isItBorder(board, x, y)){
+    if(isOccupied(board, x, y)){
         return false;
     }
 
@@ -88,6 +159,8 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
                 
                 int x_tmp = x;
                 int y_tmp = y;
+                 //Insert Stopper
+                coordToFree[indexCoord].x = -1;
 
                 x_ship = i;
                 y_ship = j;
@@ -120,18 +193,17 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
 
                 coordToFree[indexCoord].x = x_tmp;
                 coordToFree[indexCoord].y = y_tmp;
-                //Insert Stopper
-                coordToFree[indexCoord+1].x = -1;
-                
                 indexCoord++;
 
                 board[x_tmp][y_tmp].ship = malloc(sizeof(Ship));
                 board[x_tmp][y_tmp].ship = ship;
 
-                //Set border
-                setBorder(board, x_tmp, y_tmp);
             }
         }
+    }
+
+    if(BORDER_ON){
+        setBorder(board, coordToFree);
     }
 
     if(coordToFree) {
@@ -142,7 +214,7 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
     return true;
 }
 
-bool setShip(Cell** board, tTypeShip type, int x, int y, int rotate){
+bool insertShip(Cell** board, tTypeShip type, int x, int y, int rotate){
     
     if(board == NULL) {
         return false;
@@ -162,7 +234,6 @@ bool setShip(Cell** board, tTypeShip type, int x, int y, int rotate){
     }
 
     if(!isItInserted(board, x, y, ship)){
-        printf("[FAILED] Impossible to place to [%d,%d] position\n", x, y);
         return false;
     } 
 

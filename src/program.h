@@ -8,7 +8,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "battleship.h"
+
+#ifndef _PROGRAM_H
+#define _PROGRAM_H
+
+#define OPTIONS
 
 /**
  * @brief Initialize boards
@@ -20,4 +24,6 @@ void initProgram();
  * 
  * @param board - User's board
  */ 
-void initShips(Cell** board);
+void initShips();
+
+#endif 

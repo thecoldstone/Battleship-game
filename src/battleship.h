@@ -12,6 +12,8 @@
 #ifndef _BATTLESHIP_H
 #define _BATTLESHIP_H
 
+int BORDER_ON;
+
 /**
  * @brief Check whether Cell is occupied or not
  * 
@@ -51,9 +53,9 @@ bool isItBorder(Cell** board, int x, int y);
  * @brief Set border around the ship
  * 
  * @param board - User's board
- * @param x, y  - x and y coordinates on a board
+ * @param coordOfTheShip - x and y coordinates on a board
  */ 
-void setBorder(Cell** board, int x, int y);
+void setBorder(Cell** board, Coordinates* coordOfTheShip);
 
 /**
  * @brief Main function to insert ship into the user's board
@@ -75,7 +77,7 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship);
  * 
  * @return TRUE - if the ship has been inserted correctly, otherwise false
  */
-bool setShip(Cell** board, tTypeShip type, int x, int y, int rotate);
+bool insertShip(Cell** board, tTypeShip type, int x, int y, int rotate);
 
 /**
  * Is it needed?
