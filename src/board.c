@@ -38,26 +38,36 @@ Cell** boardInit(int size) {
     return newBoard;
 }
 
-void boardPrint(Cell** board) {
+void boardPrint(Cell** board, bool noShip) {
     
     if(board == NULL) {
         return;
     }
 
-    printf(" ");
+    printf("\t    ");
     for(int i = 0; i < BOARD_SIZE; i++) {
-        printf(" %d", i);
+        if(i >= 10){
+            printf(" %d ", i);
+        } else{
+            printf(" %d  ", i);
+        }
     }
 
     printf("\n");
 
     for(int i = 0; i < BOARD_SIZE; i++) {
-        printf("%i", i);
+        
+        if(i < 10){
+            printf("\t %i", i);
+        } else {
+            printf("\t%i", i);
+        }
+
         for(int j = 0; j < BOARD_SIZE; j++) {
-            printf("|");
+            printf(" | ");
 
             /***PRINT SHIP TYPE***/
-            if(board[i][j].ship != NULL) {
+            if(board[i][j].ship != NULL && noShip && board[i][j].state == NO_SHOOT) {
                 // printf("%d", board[i][j].ship->size);
 
                 switch(board[i][j].ship->type)
@@ -88,16 +98,15 @@ void boardPrint(Cell** board) {
                 printf(RED"X"RESET_COLOR);
                 break;
             case MISS:
-                printf(BLUE"*"RESET_COLOR);
-                // printf();
+                printf("*");
                 break;    
-            default:
+            default: //NO_SHOOT
                 printf(BLUE"~"RESET_COLOR);
                 break;
             }
 
         }
-        printf("|\n");
+        printf(" |\n");
     }
 
     printf("\n");

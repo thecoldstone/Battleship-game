@@ -19,6 +19,7 @@ typedef enum {
 } tTypeShip;
 
 typedef struct tShip{
+    int hp;
     int type;
     int size;
     char **bitmap;

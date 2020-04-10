@@ -27,10 +27,6 @@ void deleteFailedShip(Cell** board, Coordinates* coord){
             break;
         }
 
-        if(coord[i].x == 0 && coord[i].y == 0){
-            printf("HERE! %d\n", i);
-        }
-
         board[coord[i].x][coord[i].y].ship = NULL;
     }
 
@@ -40,37 +36,37 @@ bool isItBorder(Cell** board, int x, int y){
     return board[x][y].isBorder != false;
 }
 
-bool isNeighbour(Cell** board, int x, int y){
+// bool isNeighbour(Cell** board, int x, int y){
     
-    bool itIsNeighbour = false;
+//     bool itIsNeighbour = false;
 
-    if(!isOutOfBoard(x - 1) && !itIsNeighbour){
-        itIsNeighbour = isItBorder(board, x - 1, y);
-    }
+//     if(!isOutOfBoard(x - 1) && !itIsNeighbour){
+//         itIsNeighbour = isItBorder(board, x - 1, y);
+//     }
 
-    if(!isOutOfBoard(y - 1) && !itIsNeighbour){
-        itIsNeighbour = isItBorder(board, x, y - 1);
-    }
+//     if(!isOutOfBoard(y - 1) && !itIsNeighbour){
+//         itIsNeighbour = isItBorder(board, x, y - 1);
+//     }
 
-    if(!isOutOfBoard(x - 1) && !isOutOfBoard(y - 1) && !itIsNeighbour){
-        itIsNeighbour = isItBorder(board, x - 1, y - 1);
-    }
+//     if(!isOutOfBoard(x - 1) && !isOutOfBoard(y - 1) && !itIsNeighbour){
+//         itIsNeighbour = isItBorder(board, x - 1, y - 1);
+//     }
 
-    if(!isOutOfBoard(x + 1) && !isOutOfBoard(y) && !itIsNeighbour){
-        itIsNeighbour = isItBorder(board, x + 1, y);
-    }
+//     if(!isOutOfBoard(x + 1) && !isOutOfBoard(y) && !itIsNeighbour){
+//         itIsNeighbour = isItBorder(board, x + 1, y);
+//     }
 
-    if(!isOutOfBoard(x) && !isOutOfBoard(y + 1) && !itIsNeighbour){
-        itIsNeighbour = isItBorder(board, x, y + 1);
-    }
+//     if(!isOutOfBoard(x) && !isOutOfBoard(y + 1) && !itIsNeighbour){
+//         itIsNeighbour = isItBorder(board, x, y + 1);
+//     }
 
-    if(!isOutOfBoard(x + 1) && !isOutOfBoard(y + 1) && !itIsNeighbour){
-        itIsNeighbour = isItBorder(board, x + 1, y + 1);
-    }    
+//     if(!isOutOfBoard(x + 1) && !isOutOfBoard(y + 1) && !itIsNeighbour){
+//         itIsNeighbour = isItBorder(board, x + 1, y + 1);
+//     }    
 
-    return itIsNeighbour;
+//     return itIsNeighbour;
 
-}
+// }
 
 void setBorder(Cell** board, Coordinates* coordOfTheShip){
 
@@ -239,3 +235,33 @@ bool insertShip(Cell** board, tTypeShip type, int x, int y, int rotate){
 
     return true;
 } 
+
+int shoot(Cell** board, int x, int y){
+
+    if(board == NULL) {
+        return -1;
+    }
+
+    // Check inserted coordinates: x and y
+    if(isOutOfBoard(x) || isOutOfBoard(y)) {
+        return -1;
+    }
+
+    // If it's a miss
+    if(!isOccupied(board, x, y) && board[x][y].state == NO_SHOOT){
+        board[x][y].state = MISS;
+    }
+
+    if(isOccupied(board, x, y) && board[x][y].state == NO_SHOOT && board[x][y].ship->hp){
+        board[x][y].state = HIT;
+
+        if(--board[x][y].ship->hp == 0){
+            --NUMBER_OF_SHIPS;
+        }
+
+        return 1;
+    }
+
+    return 0;
+
+}

@@ -79,6 +79,19 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship);
  */
 bool insertShip(Cell** board, tTypeShip type, int x, int y, int rotate);
 
+
+/**
+ * @brief Shoot 
+ * 
+ * @param board - User's board
+ * @param x, y  - x and y coordinates on a board
+ * 
+ * @return -1 - if input is incorrect
+ *          0 - if MISS
+ *          1 - if HIT
+ */ 
+int shoot(Cell** board, int x, int y);
+
 /**
  * Is it needed?
  */

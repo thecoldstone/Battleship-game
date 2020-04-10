@@ -33,6 +33,7 @@ Ship* shipCreate(tTypeShip type){
         
         ship->bitmap[1][1] = 'M';
         ship->type = MONOMINO;
+        ship->hp   = 1;
 
         break;
 
@@ -46,6 +47,7 @@ Ship* shipCreate(tTypeShip type){
         ship->bitmap[0][1] = 'D';
         ship->bitmap[1][1] = 'D';
         ship->type = DOMINO;
+        ship->hp   = 2;
 
         break;    
     
@@ -60,6 +62,7 @@ Ship* shipCreate(tTypeShip type){
         ship->bitmap[1][1] = 'I';
         ship->bitmap[2][1] = 'I';
         ship->type = TROMINO;
+        ship->hp   = 3;
 
         break;
 
@@ -74,6 +77,7 @@ Ship* shipCreate(tTypeShip type){
         ship->bitmap[1][2] = 'T';
         ship->bitmap[2][1] = 'T';
         ship->type = T_TETROMINO;
+        ship->hp   = 4;
         
         break;
     /******
@@ -87,6 +91,7 @@ Ship* shipCreate(tTypeShip type){
         ship->bitmap[2][1] = 'L';
         ship->bitmap[2][2] = 'L';
         ship->type = L_TETROMINO;
+        ship->hp   = 4;
 
         break;
     }

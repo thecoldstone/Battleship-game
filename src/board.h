@@ -49,13 +49,14 @@ Cell** boardInit(int);
 /**
  * @brief Print out the board
  * @param board
+ * @param noShip - print out without ships
  */ 
-void boardPrint(Cell**);
+void boardPrint(Cell **board, bool noShip);
 
 /**
  * @brief Destroy the board
  * @param board 
  */ 
-void boardDestroy(Cell**);
+void boardDestroy(Cell **board);
 
 #endif

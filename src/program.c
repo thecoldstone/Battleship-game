@@ -13,15 +13,14 @@
 Cell** BoardUserOne;
 Cell** BoardUserTwo;
 
-bool USER_FIRST;
-bool USER_SECOND;
+int ACTIVE_USER;
 
-int genRandomNumber(int lowest, int heighest){
+int genRandomNumber(int lowest, int highest){
 
     if(lowest == 0){
-        return rand() % heighest;
+        return rand() % highest;
     } else if(lowest > 0){
-        return rand() % heighest + lowest;
+        return rand() % highest + lowest;
     } else {
         return -1;
     }
@@ -158,22 +157,41 @@ void processStartInput(){
 
 }
 
+int initShoot(Cell** board){
+
+    int x, y;
+
+    printf("Set coordinates [x, y]: ");
+    scanf(" %d,%d", &x, &y);
+
+    return shoot(board, x, y);
+
+}
+
 void INPUT(){
 
     // processStartInput();
 
     // TEST
     BOARD_SIZE = 10;
-    NUMBER_OF_SHIPS = 5;
+    NUMBER_OF_SHIPS = 1;
     // BORDER_ON = 1;
 
     /* Initialize Users */
     BoardUserOne = boardInit(BOARD_SIZE);
-    // Cell** BoardUserTwo = boardInit(BOARD_SIZE);
+    BoardUserTwo = boardInit(BOARD_SIZE);
 
     /* Set Ships */
     initShips(BoardUserOne);
-    // initShips(BoardUserTwo);
+    initShips(BoardUserTwo);
+
+}
+
+void printStatus(Cell** board){
+    
+    printf("\tUSER%i\n\t-------------\n", ACTIVE_USER);
+    boardPrint(board, true);
+    printf("\n\n\n\n\n");
 
 }
 
@@ -184,16 +202,46 @@ void initProgram(){
     
     INPUT();
 
-    /* Print out first state of game */
-    boardPrint(BoardUserOne);
-    // boardPrint(BoardUserTwo);
-
     /******LOGIC******/
 
+    ACTIVE_USER = 1;
 
+    while(true){
+
+        switch(ACTIVE_USER){
+            case 1:
+
+                printStatus(BoardUserTwo);
+                
+                if(!initShoot(BoardUserTwo)){
+                    ACTIVE_USER = 2;
+                }
+
+                break;
+
+            case 2:
+
+                printStatus(BoardUserOne);
+
+                if(!initShoot(BoardUserOne)){
+                    ACTIVE_USER = 1;
+                }
+
+                break;
+
+        }
+
+        if(NUMBER_OF_SHIPS == 0){
+            printf("Game is finished\n");
+            printf("USER%i won!\n", ACTIVE_USER);
+            break;
+        }
+
+    }
+
+    /******FINISH******/
     /* Deallocate everything at the end of game */
-    //TODO Destroy for ships
     boardDestroy(BoardUserOne);
-    // boardDestroy(BoardUserTwo);
+    boardDestroy(BoardUserTwo);
 
 }
