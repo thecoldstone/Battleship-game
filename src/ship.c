@@ -99,7 +99,13 @@ Ship* shipCreate(tTypeShip type){
     return ship;
 }
 
-void shipPrint(Ship* ship){
+void shipPrint(Ship *ship){
+
+    if(!ship || !ship->bitmap){
+        fprintf(stderr, "GOOD\n");
+        return;
+    }
+
     for(int i = 0; i < ship->size; i++) {
         printf("|");
         for(int j = 0; j < ship->size; j++) {
@@ -128,14 +134,22 @@ void shipRotate(Ship* ship, int k){
 
 } 
 
-void destroyShip(Ship* ship){
-    
-    for(int i = ship->size; 0 < i ; i--) {
+Ship* destroyShip(Ship* ship){
+
+    if(!ship || !ship->bitmap){
+        return NULL;
+    }
+
+    for(int i = 0; i < BITMAP_SIZE; i++) {
+        // printf("%c\n", ship->bitmap[1][1]);
         free(ship->bitmap[i]);
         ship->bitmap[i] = NULL;
     }
 
     free(ship->bitmap);
-    ship->bitmap = NULL;
 
+    ship->bitmap = NULL;
+    ship = NULL;
+
+    return ship;
 }

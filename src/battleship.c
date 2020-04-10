@@ -190,10 +190,7 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
                 coordToFree[indexCoord].x = x_tmp;
                 coordToFree[indexCoord].y = y_tmp;
                 indexCoord++;
-
-                board[x_tmp][y_tmp].ship = malloc(sizeof(Ship));
                 board[x_tmp][y_tmp].ship = ship;
-
             }
         }
     }

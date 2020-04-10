@@ -12,7 +12,7 @@
 #ifndef _PROGRAM_H
 #define _PROGRAM_H
 
-#define OPTIONS
+// #define OPTIONS
 
 /**
  * @brief Initialize boards

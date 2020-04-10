@@ -173,8 +173,8 @@ void INPUT(){
     // processStartInput();
 
     // TEST
-    BOARD_SIZE = 10;
-    NUMBER_OF_SHIPS = 1;
+    BOARD_SIZE = 30;
+    NUMBER_OF_SHIPS = 15;
     // BORDER_ON = 1;
 
     /* Initialize Users */
@@ -184,6 +184,10 @@ void INPUT(){
     /* Set Ships */
     initShips(BoardUserOne);
     initShips(BoardUserTwo);
+
+    // insertShip(BoardUserOne, 1, 2, 1, 0);
+    // insertShip(BoardUserOne, 0, 1, 2, 4);
+    // insertShip(BoardUserOne, 2, 1, 0, 0);
 
 }
 
@@ -204,44 +208,50 @@ void initProgram(){
 
     /******LOGIC******/
 
-    ACTIVE_USER = 1;
+    // ACTIVE_USER = 1;
 
-    while(true){
+    // while(true){
 
-        switch(ACTIVE_USER){
-            case 1:
+    //     switch(ACTIVE_USER){
+    //         case 1:
 
-                printStatus(BoardUserTwo);
+    //             printStatus(BoardUserTwo);
                 
-                if(!initShoot(BoardUserTwo)){
-                    ACTIVE_USER = 2;
-                }
+    //             if(!initShoot(BoardUserTwo)){
+    //                 ACTIVE_USER = 2;
+    //             }
 
-                break;
+    //             break;
 
-            case 2:
+    //         case 2:
 
-                printStatus(BoardUserOne);
+    //             printStatus(BoardUserOne);
 
-                if(!initShoot(BoardUserOne)){
-                    ACTIVE_USER = 1;
-                }
+    //             if(!initShoot(BoardUserOne)){
+    //                 ACTIVE_USER = 1;
+    //             }
 
-                break;
+    //             break;
 
-        }
+    //     }
 
-        if(NUMBER_OF_SHIPS == 0){
-            printf("Game is finished\n");
-            printf("USER%i won!\n", ACTIVE_USER);
-            break;
-        }
+    //     if(NUMBER_OF_SHIPS == 0){
+    //         printf("Game is finished\n");
+    //         printf("USER%i won!\n", ACTIVE_USER);
+    //         break;
+    //     }
 
-    }
+    // }
 
     /******FINISH******/
     /* Deallocate everything at the end of game */
+    // insertShip(BoardUserTwo, 1, 1, 0, 0);
+    boardPrint(BoardUserOne, true);
+    boardPrint(BoardUserTwo, true);
+
     boardDestroy(BoardUserOne);
     boardDestroy(BoardUserTwo);
+    
+    // boardPrint(BoardUserTwo, true);
 
 }

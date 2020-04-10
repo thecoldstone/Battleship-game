@@ -40,7 +40,7 @@ Cell** boardInit(int size) {
 
 void boardPrint(Cell** board, bool noShip) {
     
-    if(board == NULL) {
+    if(*board == NULL) {
         return;
     }
 
@@ -67,7 +67,7 @@ void boardPrint(Cell** board, bool noShip) {
             printf(" | ");
 
             /***PRINT SHIP TYPE***/
-            if(board[i][j].ship != NULL && noShip && board[i][j].state == NO_SHOOT) {
+            if(board[i][j].ship && noShip && board[i][j].state == NO_SHOOT) {
                 // printf("%d", board[i][j].ship->size);
 
                 switch(board[i][j].ship->type)
@@ -113,18 +113,39 @@ void boardPrint(Cell** board, bool noShip) {
 
 }
 
-void boardDestroy(Cell** board) {
+Cell** boardDestroy(Cell** board) {
     
-    if(board == NULL) {
-        return;
+    if(*board == NULL) {
+        return NULL;
     }
 
-    for(int i = BOARD_SIZE; 0 < i ; i--) {
+    int i, j;
 
+    for(i = 0; i < BOARD_SIZE; i++) {
+        
+        #ifdef DEBUG
+        fprintf(stderr, "%i\n", i);
+        #endif
+        for(j = 0; j < BOARD_SIZE; j++){ 
+
+            if(board[i][j].ship){
+                #ifdef DEBUG
+                fprintf(stderr, "[%i %i] %p\n", i, j, (void*) board[i][j].ship);
+                #endif
+                board[i][j].ship = destroyShip(board[i][j].ship);
+                free(board[i][j].ship);
+            }
+        }
+    }
+
+    for(i = 0; i < BOARD_SIZE; i++){
         free(board[i]);
         board[i] = NULL;
     }
 
     free(board);
     board = NULL;
+
+    return board;
+
 }

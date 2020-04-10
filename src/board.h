@@ -8,6 +8,8 @@
 #ifndef _BOARD_H
 #define _BOARD_H
 
+// #define DEBUG
+
 //Colors
 #define RESET_COLOR "\x1B[0m"
 #define BLUE "\x1B[34m"
@@ -57,6 +59,6 @@ void boardPrint(Cell **board, bool noShip);
  * @brief Destroy the board
  * @param board 
  */ 
-void boardDestroy(Cell **board);
+Cell** boardDestroy(Cell **board);
 
 #endif
