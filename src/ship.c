@@ -12,12 +12,29 @@
 Ship* shipCreate(tTypeShip type){
     
     BITMAP_SIZE = 3;
-    Ship* ship = malloc(sizeof(Ship));
+    Ship* ship = (Ship*) malloc(sizeof(Ship));
+
+    if(!ship) {
+        fprintf(stderr, "[INTERNAL ERROR]Failed Allocation.\n");
+        return NULL;
+    }
+
     ship->size = BITMAP_SIZE;
     ship->bitmap = (char**) malloc(sizeof(char*) * BITMAP_SIZE);
+
+    if(!ship->bitmap) {
+        fprintf(stderr, "[INTERNAL ERROR]Failed Allocation.\n");
+        return NULL;
+    }
         
     for(int i = 0; i < BITMAP_SIZE; i++){
         ship->bitmap[i] = (char*) malloc(sizeof(char) * BITMAP_SIZE);
+
+        if(!ship->bitmap[i]){
+            fprintf(stderr, "[INTERNAL ERROR]Failed Allocation.\n");
+            return NULL;
+        }
+
         for(int j = 0; j < BITMAP_SIZE; j++){
             ship->bitmap[i][j] = '#';
         }

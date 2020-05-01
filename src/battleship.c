@@ -36,6 +36,7 @@ bool isItBorder(Cell** board, int x, int y){
     return board[x][y].isBorder != false;
 }
 
+/* Needed function for future */
 // bool isNeighbour(Cell** board, int x, int y){
     
 //     bool itIsNeighbour = false;

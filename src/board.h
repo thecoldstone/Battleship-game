@@ -37,7 +37,7 @@ typedef struct tCoordinates{
 typedef struct tCell{
     Ship *ship;
     State state;
-    bool isBorder;   
+    bool isBorder; // User for mode with border  
 } Cell;
 
 /**

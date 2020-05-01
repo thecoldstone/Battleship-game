@@ -27,12 +27,16 @@ int main()
 
     /***********************************************/
     /*INITIALIZE THE GAME*/
+    //FIXME: Check the success of allocation!
     User* user_one = initUser(1, BOARD_SIZE, NUMBER_OF_SHIPS);
+    //FIXME: Check the success of allocation!
     User* user_two = initUser(2, BOARD_SIZE, NUMBER_OF_SHIPS);
     User** active_user = &user_two;
 
+    //FIXME: Check the success of allocation!
     initShips(user_one->board);
     sleep(1);
+    //FIXME: Check the success of allocation!
     initShips(user_two->board);
     fprintf(stdout, "Game has been initialized.\n");
     sleep(1);

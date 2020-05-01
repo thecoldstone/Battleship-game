@@ -5,6 +5,7 @@
  * @date 21.03.20
  **/
 
+#include <stdio.h>
 #include <stdlib.h>
 #include "board.h"
 
