@@ -233,9 +233,9 @@ bool insertShip(Cell** board, tTypeShip type, int x, int y, int rotate){
     return true;
 } 
 
-int shoot(Cell** board, int x, int y){
+int shoot(User* user, int x, int y){
 
-    if(board == NULL) {
+    if(user->board == NULL) {
         return -1;
     }
 
@@ -245,15 +245,15 @@ int shoot(Cell** board, int x, int y){
     }
 
     // If it's a miss
-    if(!isOccupied(board, x, y) && board[x][y].state == NO_SHOOT){
-        board[x][y].state = MISS;
+    if(!isOccupied(user->board, x, y) && user->board[x][y].state == NO_SHOOT){
+        user->board[x][y].state = MISS;
     }
 
-    if(isOccupied(board, x, y) && board[x][y].state == NO_SHOOT && board[x][y].ship->hp){
-        board[x][y].state = HIT;
+    if(isOccupied(user->board, x, y) && user->board[x][y].state == NO_SHOOT && user->board[x][y].ship->hp){
+        user->board[x][y].state = HIT;
 
-        if(--board[x][y].ship->hp == 0){
-            --NUMBER_OF_SHIPS;
+        if(--user->board[x][y].ship->hp == 0){
+            user->ships--;
         }
 
         return 1;

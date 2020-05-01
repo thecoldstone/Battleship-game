@@ -9,21 +9,24 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "battleship.h"
+
 #ifndef _PROGRAM_H
 #define _PROGRAM_H
-
-// #define OPTIONS
-
-/**
- * @brief Initialize boards
- */ 
-void initProgram();
 
 /**
  * @brief Initalize ships
  * 
  * @param board - User's board
  */ 
-void initShips();
+void initShips(Cell** board);
+
+/**
+ * @brief Initialize shoot
+ * 
+ * @param board - User's board
+ * @return 1 - hit, 0 - miss
+ */ 
+int initShoot(User* user);
 
 #endif 

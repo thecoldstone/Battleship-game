@@ -6,13 +6,12 @@
  * 
 */
 
-#include "board.h"
+#include "user.h"
 #include "ship.h"
+#include "modes.h"
 
 #ifndef _BATTLESHIP_H
 #define _BATTLESHIP_H
-
-int BORDER_ON;
 
 /**
  * @brief Check whether Cell is occupied or not
@@ -83,14 +82,14 @@ bool insertShip(Cell** board, tTypeShip type, int x, int y, int rotate);
 /**
  * @brief Shoot 
  * 
- * @param board - User's board
+ * @param user - active user
  * @param x, y  - x and y coordinates on a board
  * 
  * @return -1 - if input is incorrect
  *          0 - if MISS
  *          1 - if HIT
  */ 
-int shoot(Cell** board, int x, int y);
+int shoot(User* user, int x, int y);
 
 /**
  * Is it needed?
