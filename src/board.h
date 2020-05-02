@@ -8,20 +8,14 @@
 #ifndef _BOARD_H
 #define _BOARD_H
 
-// #define DEBUG
-
-//Colors
-#define RESET_COLOR "\x1B[0m"
-#define BLUE "\x1B[34m"
-#define RED  "\x1B[0;31m"
-#define CYAN "\x1B[0;36m"
-
 //Board characteristics
 int BOARD_SIZE; 
 int NUMBER_OF_SHIPS;
 
-#include<stdbool.h>
-#include"ship.h"
+#include <stdbool.h>
+#include "ship.h"
+#include "modes.h"
+
 
 typedef enum tState{
     NO_SHOOT = 0,

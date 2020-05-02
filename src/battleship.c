@@ -192,6 +192,10 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
                 coordToFree[indexCoord].y = y_tmp;
                 indexCoord++;
                 board[x_tmp][y_tmp].ship = ship;
+                #ifdef DEBUG
+                shipPrint(*board[x_tmp][y_tmp].ship);
+                fprintf(stdout, "Board cell: %p\n Ship to be inserted: %p\n",(void*) &board[x][y].ship, (void*) &(*ship));
+                #endif
             }
         }
     }
@@ -221,6 +225,11 @@ bool insertShip(Cell** board, tTypeShip type, int x, int y, int rotate){
 
     // Create ship
     Ship* ship = shipCreate(type);
+
+    if(!ship) {
+        fprintf(stderr, RED"[INTERNAL ERROR] Failed Allocation.\n"RESET_COLOR);
+        return false;
+    }
 
     //Check inserted rotation: rotate
     if(rotate > 0){
