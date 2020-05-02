@@ -27,7 +27,7 @@ typedef struct tShip{
 
 Ship* shipCreate(tTypeShip);
 void shipRotate(Ship*, int);
-void destroyShip(Ship*);
+Ship* destroyShip(Ship*);
 void shipPrint(Ship*);
 
 #endif

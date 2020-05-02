@@ -150,19 +150,22 @@ void shipRotate(Ship* ship, int k){
 
 } 
 
-void destroyShip(Ship* ship){
+Ship* destroyShip(Ship* ship){
 
     if(!ship || !ship->bitmap){
-        return;
+        return NULL;
     }
-    
+
     for(int i = 0; i < BITMAP_SIZE; i++) {
-        fprintf(stderr, "HERE%i ", i);
         // printf("%c\n", ship->bitmap[1][1]);
         free(ship->bitmap[i]);
+        ship->bitmap[i] = NULL;
     }
 
     free(ship->bitmap);
-    free(ship);
 
+    ship->bitmap = NULL;
+    ship = NULL;
+
+    return ship;
 }

@@ -9,7 +9,7 @@
 #ifndef _MODES_H
 #define _MODES_H
 
-#define DEBUG
+// #define DEBUG
 
 #define RESET_COLOR "\x1B[0m"
 #define BLUE "\x1B[34m"
