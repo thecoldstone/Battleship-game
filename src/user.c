@@ -1,3 +1,11 @@
+/**
+ * @file user.c
+ * @brief API for USER
+ * @author Nikita Zhukov
+ * @date 21.03.20
+ **/
+
+
 #include "user.h"
 
 User* initUser(int id, int BOARD_SIZE, int NUMBER_OF_SHIPS){

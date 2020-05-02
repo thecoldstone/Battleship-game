@@ -11,7 +11,7 @@
 
 #include "user.h"
 #include "io_handler.h"
-#include "init.h"
+#include "ship_setup.h"
 
 int main() 
 {   
@@ -20,24 +20,21 @@ int main()
 
     /***********************************************/
     /*START INPUT*/ 
-    BOARD_SIZE = 10;
-    NUMBER_OF_SHIPS = 5;
-
+    BOARD_SIZE = inputBoardSize();
+    NUMBER_OF_SHIPS = inputShips(BOARD_SIZE);
     /***********************************************/
 
     /***********************************************/
     /*INITIALIZE THE GAME*/
-    //FIXME: Check the success of allocation!
     User* user_one = initUser(1, BOARD_SIZE, NUMBER_OF_SHIPS);
-    //FIXME: Check the success of allocation!
     User* user_two = initUser(2, BOARD_SIZE, NUMBER_OF_SHIPS);
     User** active_user = &user_two;
 
     //FIXME: Check the success of allocation!
-    initShips(user_one->board);
+    initShips(user_one);
     sleep(1);
     //FIXME: Check the success of allocation!
-    initShips(user_two->board);
+    initShips(user_two);
     fprintf(stdout, "Game has been initialized.\n");
     sleep(1);
     system("clear");
@@ -79,8 +76,8 @@ int main()
         system("clear");
 
         if((*active_user)->ships == 0){
-            printf("Game is finished\n");
-            printf("USER%i won!\n", (*active_user)->id);
+            fprintf(stdout, "Game is finished\n");
+            fprintf(stdout, "USER%i won!\n", (*active_user)->id);
             break;
         }
 
@@ -94,7 +91,6 @@ int main()
 
     boardDestroy(user_two->board);
     userDestroy(user_two);
-
     /***********************************************/
     
     return 0; 

@@ -1,5 +1,5 @@
 /**
- * @file Header of program.c 
+ * @file Header of ship_setup.c 
  * @author Nikita Zhukov
  * @date 21.03.20
  * 
@@ -17,14 +17,14 @@
 /**
  * @brief Initalize ships
  * 
- * @param board - User's board
+ * @param user - User's board
  */ 
-void initShips(Cell** board);
+void initShips(User* user);
 
 /**
  * @brief Initialize shoot
  * 
- * @param board - User's board
+ * @param user - User's board
  * @return 1 - hit, 0 - miss
  */ 
 int initShoot(User* user);

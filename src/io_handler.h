@@ -1,6 +1,6 @@
 /**
- * @file Header for input
- * @brief API for analyzing user's input
+ * @file io_handler.h
+ * @brief API for analyzing user's input and output
  * @author Nikita Zhukov
  * @date 01.05.20
  * 

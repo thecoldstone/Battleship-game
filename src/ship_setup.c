@@ -1,14 +1,14 @@
 /**
- * @file program.c 
- * @brief Implementation of API to run the program
+ * @file ship_setup.c 
+ * @brief API for ship setup
  * @author Nikita Zhukov
  * @date 21.03.20
  * 
 */
 
-#include "init.h"
+#include "ship_setup.h"
 
-int genRandomNumber(int lowest, int highest){
+static int genRandomNumber(int lowest, int highest){
 
     if(lowest == 0){
         return rand() % highest;
@@ -20,7 +20,7 @@ int genRandomNumber(int lowest, int highest){
 
 }
 
-void initShipsRandomly(Cell** board){
+static void initShipsRandomly(Cell** board){
  
     int x, y, type, rotation;
 
@@ -39,13 +39,13 @@ void initShipsRandomly(Cell** board){
 
 }
 
-void initShipsManually(Cell** board){
+static void initShipsManually(Cell** board){
     
     int i = 0;
 
     while(i != NUMBER_OF_SHIPS) {
 
-        //boardPrint before inserting
+        boardPrint(board, 1);
         
         tTypeShip type;
         printf("Choose the type of board to insert [0-4]: ");
@@ -60,7 +60,7 @@ void initShipsManually(Cell** board){
         scanf(" %d", &rotate);
 
         while(!insertShip(board, type, x, y, rotate)){
-            printf("[FAILED] You can not insert there [%d, %d]\n", x, y);
+            fprintf(stdout, RED"[FAILED]"RESET_COLOR"You can not insert there [%d, %d]\n", x, y);
             printf("Set coordinates [x, y]: ");
             scanf(" %d,%d", &x, &y);
 
@@ -69,20 +69,24 @@ void initShipsManually(Cell** board){
             printf("\n");
         }
 
+        // To clear terminal window
+        system("clear");
+
         if(NUMBER_OF_SHIPS - i - 1 != 0){
-            printf("Ship remained to insert: %d\n", NUMBER_OF_SHIPS - i - 1);
+            printf("Ship remained to insert: %d\n\n", NUMBER_OF_SHIPS - i - 1);
         }
         
         i++;
     }
 }
 
-void initShips(Cell** board){
+void initShips(User* user){
 
     /******INPUT******/
     bool isInitialized = false;
     int howToSetShips;
-    printf("Choose how to insert ships\n[1] Manually\n[2] Randomly\n:");
+    fprintf(stdout, "User %i\n", user->id);
+    fprintf(stdout, "Choose how to insert ships\n[1] Manually\n[2] Randomly\n:");
     scanf(" %1d", &howToSetShips);
     
     while(!isInitialized){
@@ -90,11 +94,11 @@ void initShips(Cell** board){
         switch(howToSetShips){
         
         case 1:
-            initShipsManually(board);
+            initShipsManually(user->board);
             isInitialized = true;
             break;
         case 2:
-            initShipsRandomly(board);
+            initShipsRandomly(user->board);
             isInitialized = true;
             break;
         default:
