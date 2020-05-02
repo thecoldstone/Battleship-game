@@ -204,10 +204,8 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
         setBorder(board, coordToFree);
     }
 
-    if(coordToFree) {
-        free(coordToFree);
-        coordToFree = NULL;
-    }
+    free(coordToFree);
+    coordToFree = NULL;
 
     return true;
 }
