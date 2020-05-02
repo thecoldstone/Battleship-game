@@ -31,6 +31,7 @@ void deleteFailedShip(Cell** board, Coordinates* coord){
     }
 
     free(coord);
+    coord = NULL;
 
 }
 

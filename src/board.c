@@ -132,11 +132,22 @@ Cell** boardDestroy(Cell** board) {
                 #ifdef DEBUG
                 fprintf(stderr, "[%i %i] %p\n", i, j, (void*) &board[i][j].ship);
                 #endif
-                board[i][j].ship = destroyShip(board[i][j].ship);
+
+                // if(board[i][j].ship->bitmap == NULL) {
+                //     fprintf(stderr, "HERE");
+                //     break;
+                // }
                 #ifdef DEBUG
-                fprintf(stderr, "Address: %p\n",(void*) &board[i][j].ship);
-                #endif 
-                free(board[i][j].ship);
+                #endif
+                destroyShip(board[i][j].ship);
+                // shipPrint(board[i][j].ship);
+                // #ifdef DEBUG
+                // fprintf(stderr, "[%i %i] %p | %d\n", i, j, (void*) &board[i][j].ship, board[i][j].ship->type);
+                // #endif
+                // #ifdef DEBUG
+                // fprintf(stderr, "Address: %p\n",(void*) &board[i][j].ship);
+                // #endif 
+                // free(board[i][j].ship);
             }
         }
     }
