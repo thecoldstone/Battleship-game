@@ -124,15 +124,18 @@ Cell** boardDestroy(Cell** board) {
     for(i = 0; i < BOARD_SIZE; i++) {
         
         #ifdef DEBUG
-        fprintf(stderr, "%i\n", i);
+        fprintf(stderr, "Row %i\n", i);
         #endif
         for(j = 0; j < BOARD_SIZE; j++){ 
 
             if(board[i][j].ship){
                 #ifdef DEBUG
-                fprintf(stderr, "[%i %i] %p\n", i, j, (void*) board[i][j].ship);
+                fprintf(stderr, "[%i %i] %p\n", i, j, (void*) &board[i][j].ship);
                 #endif
                 board[i][j].ship = destroyShip(board[i][j].ship);
+                #ifdef DEBUG
+                fprintf(stderr, "Address: %p\n",(void*) &board[i][j].ship);
+                #endif 
                 free(board[i][j].ship);
             }
         }

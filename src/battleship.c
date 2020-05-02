@@ -30,6 +30,8 @@ void deleteFailedShip(Cell** board, Coordinates* coord){
         board[coord[i].x][coord[i].y].ship = NULL;
     }
 
+    free(coord);
+
 }
 
 bool isItBorder(Cell** board, int x, int y){
@@ -193,8 +195,8 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
                 indexCoord++;
                 board[x_tmp][y_tmp].ship = ship;
                 #ifdef DEBUG
-                shipPrint(*board[x_tmp][y_tmp].ship);
-                fprintf(stdout, "Board cell: %p\n Ship to be inserted: %p\n",(void*) &board[x][y].ship, (void*) &(*ship));
+                shipPrint(board[x_tmp][y_tmp].ship);
+                fprintf(stdout, "Board cell: %p\n Ship to be inserted: %p\n",(void*) &board[x][y].ship, (void*) &(ship));
                 #endif
             }
         }
