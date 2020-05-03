@@ -82,7 +82,6 @@ static void initShipsManually(Cell** board){
 
 void initShips(User* user){
 
-    /******INPUT******/
     bool isInitialized = false;
     int howToSetShips;
     fprintf(stdout, "User %i\n", user->id);

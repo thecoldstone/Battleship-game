@@ -16,11 +16,9 @@ int inputBoardSize(){
     scanf("%d", &size);
     //1. [RULE]: The allowed game size should be between 20x20 to 40x40 (always squares).
     while(size < 20 || size > 40){
-        fprintf(stderr, RED"[FAILED]"RESET_COLOR" Enter the size of board again: ");
+        fprintf(stderr, RED"[FAILED]"RESET_COLOR" Enter the size of board again between [20..40]: ");
         scanf(" %d", &size);
     }  
-
-    fflush(stdin);
 
     return size;
 
@@ -29,6 +27,10 @@ int inputBoardSize(){
 int inputShips(int size){
 
     int number;
+    #ifdef DEBUG
+    (void) size;
+    #endif
+
 
     printf("Number of ships: ");
     scanf(" %d", &number);

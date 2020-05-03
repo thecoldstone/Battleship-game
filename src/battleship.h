@@ -8,7 +8,7 @@
 
 #include "user.h"
 #include "ship.h"
-#include "modes.h"
+#include "utilities.h"
 
 #ifndef _BATTLESHIP_H
 #define _BATTLESHIP_H

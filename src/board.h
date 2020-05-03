@@ -8,13 +8,12 @@
 #ifndef _BOARD_H
 #define _BOARD_H
 
-//Board characteristics
 int BOARD_SIZE; 
 int NUMBER_OF_SHIPS;
 
 #include <stdbool.h>
 #include "ship.h"
-#include "modes.h"
+#include "utilities.h"
 
 
 typedef enum tState{
@@ -53,6 +52,6 @@ void boardPrint(Cell **board, bool noShip);
  * @brief Destroy the board
  * @param board 
  */ 
-Cell** boardDestroy(Cell **board);
+void boardDestroy(Cell **board);
 
 #endif

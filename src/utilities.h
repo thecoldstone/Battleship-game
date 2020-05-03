@@ -1,13 +1,13 @@
 /**
- * @file Various mode for game
- * @brief Here user can activate various modes
+ * @file utilities.h
+ * @brief Here user can activate various modes and debug
  * @author Nikita Zhukov
  * @date 01.05.20
  * 
 */
 
-#ifndef _MODES_H
-#define _MODES_H
+#ifndef _UTILITIES_H
+#define _UTILITIES_H
 
 // #define DEBUG
 

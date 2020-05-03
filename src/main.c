@@ -9,7 +9,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "user.h"
+#include "utilities.h"
 #include "io_handler.h"
 #include "ship_setup.h"
 

@@ -113,10 +113,10 @@ void boardPrint(Cell** board, bool noShip) {
 
 }
 
-Cell** boardDestroy(Cell** board) {
+void boardDestroy(Cell** board) {
     
     if(*board == NULL) {
-        return NULL;
+        return;
     }
 
     int i, j;
@@ -145,7 +145,5 @@ Cell** boardDestroy(Cell** board) {
 
     free(board);
     board = NULL;
-
-    return board;
 
 }
