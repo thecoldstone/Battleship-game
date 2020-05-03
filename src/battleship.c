@@ -273,3 +273,14 @@ int shoot(User* user, int x, int y){
     return 0;
 
 }
+
+int initShoot(User* user){
+
+    int x, y;
+
+    printf("Set coordinates [x, y]: ");
+    scanf(" %d,%d", &x, &y);
+
+    return shoot(user, x, y);
+
+}

@@ -22,7 +22,7 @@ typedef struct tShip{
     int hp;
     int type;
     int size;
-    char** bitmap;
+    char bitmap[3][3];
 } Ship;
 
 Ship* shipCreate(tTypeShip);

@@ -92,6 +92,14 @@ bool insertShip(Cell** board, tTypeShip type, int x, int y, int rotate);
 int shoot(User* user, int x, int y);
 
 /**
+ * @brief Initialize shoot
+ * 
+ * @param user - User's board
+ * @return 1 - hit, 0 - miss
+ */ 
+int initShoot(User* user);
+
+/**
  * Is it needed?
  */
 bool isRotatable(Cell**, tTypeShip, int, int);

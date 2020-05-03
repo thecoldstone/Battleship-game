@@ -42,24 +42,24 @@ int inputShips(int size){
 }
 
 //FIXME: Not well organized function!
-int inputMode(){
+// int inputMode(){
 
-    char *c;
+//     char *c;
 
-    /**MODE 1 = BORDER **/
-    printf("Set gap between ships to one cell?[y/n]:");
-    scanf(" %1s", c);
-    while(strcmp(c, "y") != 0 && strcmp(c, "n") != 0 && strcmp(c, "Y") != 0 && strcmp(c, "N") != 0){
-        scanf(" %1s", c);
-    }
+//     /**MODE 1 = BORDER **/
+//     printf("Set gap between ships to one cell?[y/n]:");
+//     scanf(" %1s", c);
+//     while(strcmp(c, "y") != 0 && strcmp(c, "n") != 0 && strcmp(c, "Y") != 0 && strcmp(c, "N") != 0){
+//         scanf(" %1s", c);
+//     }
 
-    if(strcmp(c, "y") == 0){
-        BORDER_ON = 1;
-    }
+//     if(strcmp(c, "y") == 0){
+//         BORDER_ON = 1;
+//     }
 
-    return 1;
+//     return 1;
 
-}
+// }
 
 void getStatus(User* user){
     

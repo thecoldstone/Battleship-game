@@ -47,7 +47,7 @@ static void initShipsManually(Cell** board){
 
         boardPrint(board, 1);
         
-        tTypeShip type;
+        int type;
         printf("Choose the type of board to insert [0-4]: ");
         while(!scanf("%d", &type));       
 
@@ -107,16 +107,5 @@ void initShips(User* user){
 
         }      
     }
-
-}
-
-int initShoot(User* user){
-
-    int x, y;
-
-    printf("Set coordinates [x, y]: ");
-    scanf(" %d,%d", &x, &y);
-
-    return shoot(user, x, y);
 
 }

@@ -1,7 +1,7 @@
 /**
  * @file main.c 
  * @brief Main file 
- * @author Nikita Zhukov
+ * @author Nikita Zhukov, Diogo Gomez
  * @date 21.03.20
  * 
 */
@@ -43,45 +43,45 @@ int main()
     /***********************************************/
     /*THE GAME'S LOGIC*/
     fprintf(stdout, "Game has started!\n");
-    // sleep(1);
-    // system("clear");
+    sleep(1);
+    system("clear");
 
-    // do {
+    do {
 
-    //     getStatus(*active_user);
+        getStatus(*active_user);
 
-    //     switch((*active_user)->id){
+        switch((*active_user)->id){
 
-    //         case 1:
+            case 1:
 
-    //             if(!initShoot(*active_user)){
-    //                 fprintf(stdout, "Miss\n");
-    //                 active_user = &user_two;
-    //             }
+                if(!initShoot(*active_user)){
+                    fprintf(stdout, "Miss\n");
+                    active_user = &user_two;
+                }
 
-    //             break;
+                break;
 
-    //         case 2:
+            case 2:
 
-    //             if(!initShoot(*active_user)){
-    //                 fprintf(stdout, "Miss\n");
-    //                 active_user = &user_one;
-    //             }
+                if(!initShoot(*active_user)){
+                    fprintf(stdout, "Miss\n");
+                    active_user = &user_one;
+                }
 
-    //             break;
+                break;
 
-    //     } 
+        } 
 
-    //     sleep(1);
-    //     system("clear");
+        sleep(1);
+        system("clear");
 
-    //     if((*active_user)->ships == 0){
-    //         fprintf(stdout, "Game is finished\n");
-    //         fprintf(stdout, "USER%i won!\n", (*active_user)->id);
-    //         break;
-    //     }
+        if((*active_user)->ships == 0){
+            fprintf(stdout, "Game is finished\n");
+            fprintf(stdout, "USER%i won!\n", (*active_user)->id);
+            break;
+        }
 
-    // } while(true);
+    } while(true);
     /***********************************************/
 
     /***********************************************/

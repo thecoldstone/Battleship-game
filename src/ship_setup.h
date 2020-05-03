@@ -21,12 +21,4 @@
  */ 
 void initShips(User* user);
 
-/**
- * @brief Initialize shoot
- * 
- * @param user - User's board
- * @return 1 - hit, 0 - miss
- */ 
-int initShoot(User* user);
-
 #endif 
