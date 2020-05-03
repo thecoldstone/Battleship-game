@@ -75,7 +75,7 @@ void getStatus(User* user){
 
     printf("\tACTIVE USER: %i\n\t-------------\n", activeUser);
     printf("\tYOU ARE ATTACKING THE USER: %i\n\t-------------\n", user->id);
-    boardPrint(user->board, true);
+    boardPrint(user->board, false);
     printf("\n\n\n\n\n");
 
 }
