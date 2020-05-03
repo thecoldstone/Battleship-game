@@ -35,16 +35,6 @@ Cell** boardInit(int size) {
         }
     }
  
- Board boardPrint(Board){
-  
-     for (int i = 0; i < size; i++){
-        for(int j = 0; j < size; j++){
-             // Print board
-        }
-    }
- 
- }
-
     return newBoard;
 }
 
