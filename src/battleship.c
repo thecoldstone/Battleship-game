@@ -30,9 +30,6 @@ void deleteFailedShip(Cell** board, Coordinates* coord){
         board[coord[i].x][coord[i].y].ship = NULL;
     }
 
-    free(coord);
-    coord = NULL;
-
 }
 
 bool isItBorder(Cell** board, int x, int y){
@@ -139,13 +136,7 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
     //Coordinates are used to delete pointers to the ship if the insertion failed
     //OR
     //To set borders if insertion has been successful 
-    Coordinates* coordToFree = (Coordinates*) malloc(sizeof(Coordinates) * (BITMAP_SIZE + 1));
-
-    //Check allocation
-    if(!coordToFree){
-        fprintf(stderr, "[INTERNAL ERROR] Failed allocation.\n");
-        return false;
-    }
+    Coordinates coordToFree[BITMAP_SIZE + 1];
 
     int indexCoord = 0;
 
@@ -206,9 +197,6 @@ bool isItInserted(Cell** board, int x, int y, Ship* ship){
     if(BORDER_ON){
         setBorder(board, coordToFree);
     }
-
-    free(coordToFree);
-    coordToFree = NULL;
 
     return true;
 }
