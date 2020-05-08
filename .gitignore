@@ -1,6 +1,2 @@
 .vscode/*
-client_server_model/*
-quadtree/*
-server_client_2/*
-tests/*
-v_semaphores/*
+stuff/*
