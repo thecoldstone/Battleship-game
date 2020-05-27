@@ -5,40 +5,41 @@ void end_program(const char *msg) {
   exit(1);
 }
 
-void lock(int sem_num) { 
+void lock(int semid, int sem_num) { 
   struct sembuf semb;
 
   semb.sem_num = sem_num;
   semb.sem_op = -1;
   semb.sem_flg = SEM_UNDO;
-  if (semop(SEMID, &semb, 1) == -1) {
+  if (semop(semid, &semb, 1) == -1) {
     end_program("semop lock");
   }
 
 }
 
-void unlock(int sem_num) {
+void unlock(int semid, int sem_num) {
   struct sembuf semb;
 
   semb.sem_num = sem_num;
   semb.sem_op = 1;
   semb.sem_flg = SEM_UNDO;
-  if (semop(SEMID, &semb, 1) == -1) {
+  if (semop(semid, &semb, 1) == -1) {
     end_program("semop unlock");
   }
 
 }
 
-void w_shoot(int fd, char *buf) {
-    lock(EMPT);
-    lock(MUTX);
+void w_shoot(int semid, int fd, char *buf) {
+    lock(semid, EMPT);
+    lock(semid, MUTX);
     write(fd, buf, sizeof(BUFFER));
-    unlock(MUTX);
-    unlock(FULL);
+    unlock(semid, MUTX);
+    unlock(semid, FULL);
 }
 
-int init_v_system(key_t key){
+int init_v_system(const char* f_name){
 
+  key_t key;
   int semid;
   union semun sop;
   unsigned short array[3];
@@ -48,7 +49,7 @@ int init_v_system(key_t key){
   sop.array = array;
   // fprintf(stdout, "%d\n", sizeof(BUFFER));  
 
-  if ((key = ftok(FILE_GAME, 'O')) == -1) { 
+  if ((key = ftok(f_name, 'O')) == -1) { 
     end_program("ftok");
   }
 

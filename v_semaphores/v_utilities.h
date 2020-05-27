@@ -19,16 +19,20 @@
 #ifndef _UTILITIES_H
 #define _UTILITIES_H
 
-// #define DEBUG
-#define FILE_GAME     "game.txt"
+#define DEBUG
+#define FILE_SHOOT  "shoot.txt"
+#define FILE_BOARD  "board.txt"
+
+// #define FILE_GAME FILE_SHOOT
 
 /* Definition for set of semaphores */
 enum {MUTX, FULL, EMPT};
 
 /* Buffer for communication between two users */
-char BUFFER[10];
+char BUFFER[128];
 
 int SEMID;
+int SEMID_B;
 
 /**
  * @brief End program due to error
@@ -42,18 +46,16 @@ void end_program(const char *msg);
  * 
  * @param sem_num - number of semaphore in V Semaphore System 
  */
-void lock(int sem_num);
+void lock(int semid, int sem_num);
 
 /**
  * @brief Unlock semaphore
  * 
  * @param sem_num - number of semaphore in V Semaphore System 
  */
-void unlock(int sem_num);
+void unlock(int semid, int sem_num);
 
-void w_shoot(int fd, char *buf);
-
-void r_shoot(int fd, char *buf);
+void w_shoot(int semid, int fd, char *buf);
 
 /**
  * @brief Initiaization of V System
@@ -61,6 +63,6 @@ void r_shoot(int fd, char *buf);
  * @param key - key derived from FILE
  * @return Id of set of semaphore
  */
-int init_v_system(key_t key);
+int init_v_system(const char* f_name);
 
 #endif

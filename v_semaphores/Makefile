@@ -18,4 +18,5 @@ build:
 clean:
 	rm user
 	rm user2 
-	rm game.txt
+	rm shoot.txt
+	rm board.txt
