@@ -19,7 +19,7 @@
 #ifndef _UTILITIES_H
 #define _UTILITIES_H
 
-#define DEBUG
+// #define DEBUG
 // #define DEBUG_FILE_BOARD
 
 #define FILE_SHOOT  "shoot.txt"
@@ -33,8 +33,8 @@
 enum {MUTX, FULL, EMPT};
 
 /* Buffer for communication between two users */
-char BUFFER[10];
-char BUFFER_BOARD[2000];
+char BUFFER[20];
+char BUFFER_BOARD[200];
 
 int SEMID;
 int SEMID_B;

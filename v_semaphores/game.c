@@ -4,7 +4,7 @@ User* init_game(int id) {
     /* FOR RANDOM INSERTION */
     srand((unsigned int) time(NULL)); 
 
-    BOARD_SIZE = 10;
+    BOARD_SIZE = 15;
     NUMBER_OF_SHIPS = 5;
 
     /*INITIALIZE THE GAME*/
@@ -16,13 +16,10 @@ User* init_game(int id) {
     return user;
 }
 
-void board_print(Cell** board, bool noShip, int fd) {
+void board_print(User* user, bool noShip, int fd) {
     
-    if(*board == NULL) {
-        return;
-    }
     char buffer[256];
-    memset(buffer, 0,strlen(buffer));
+    memset(buffer, 0, strlen(buffer));
 
     write(fd, "\t    ", 6);
 
@@ -51,10 +48,10 @@ void board_print(Cell** board, bool noShip, int fd) {
             sprintf(&buffer[strlen(buffer)], " | ");
 
             /***PRINT SHIP TYPE***/
-            if(board[i][j].ship && noShip && board[i][j].state == NO_SHOOT) {
+            if(user->board[i][j].ship && noShip && user->board[i][j].state == NO_SHOOT) {
                 // printf("%d", board[i][j].ship->size);
 
-                switch(board[i][j].ship->type)
+                switch(user->board[i][j].ship->type)
                 {
                 case MONOMINO:
                     sprintf(&buffer[strlen(buffer)], "M");
@@ -76,7 +73,7 @@ void board_print(Cell** board, bool noShip, int fd) {
                 continue;
             }
             /***PRINT BOARD STATES***/
-            switch (board[i][j].state)
+            switch (user->board[i][j].state)
             {
             case HIT:
                 sprintf(&buffer[strlen(buffer)], RED"X"RESET_COLOR);

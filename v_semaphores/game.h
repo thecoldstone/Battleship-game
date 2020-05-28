@@ -22,7 +22,7 @@
  */
 User* init_game(int id);
 
-void board_print(Cell** board, bool noShip, int fd);
+void board_print(User* user, bool noShip, int fd);
 
 int get_board(int fd);
 

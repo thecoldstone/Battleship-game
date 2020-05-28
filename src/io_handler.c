@@ -96,8 +96,15 @@ int getCoordinates(char *s, char *x, char *y){
                 j++;
             }           
         } else if (s[i] == ',') {
-           j = 0;
-           comma = 1;
+            
+            if(comma > 1) {
+                fprintf(stderr, RED"[ERROR]"RESET_COLOR" Not correct coordinates\n");
+                return 0;
+            }
+
+            j = 0;
+            comma++;
+
         } else {
             fprintf(stderr, RED"[ERROR]"RESET_COLOR" Not correct coordinates\n");
             return 0;

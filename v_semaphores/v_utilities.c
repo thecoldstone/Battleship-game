@@ -34,6 +34,7 @@ void w_shoot(int semid, int fd, char *buf) {
     lock(semid, EMPT);
     lock(semid, MUTX);
     write(fd, buf, sizeof(buf));
+    memset(buf, 0, strlen(buf));
     unlock(semid, MUTX);
     unlock(semid, FULL);
 }

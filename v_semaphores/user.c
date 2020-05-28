@@ -77,7 +77,7 @@ int main() {
 
       lock(SEMID_B, EMPT);
       lock(SEMID_B, MUTX);
-      board_print(user->board, 1, fd_board);
+      board_print(user, 1, fd_board);
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, FULL);
 
@@ -103,16 +103,17 @@ int main() {
 
       if(strcmp(BUFFER, "exit") == 0) {
         GAME = 0;
+      } else if(strcmp(BUFFER, "FAILED") == 0 || strcmp(BUFFER, "MISS") == 0){
+        SHOOT = 0;
+        RECIEVE = 1;
       } else {
-        strcpy(BUFFER, ""); 
+        memset(BUFFER, 0, strlen(BUFFER));
+        sleep(1);
+        system("clear");
       }
-
-      sleep(1);
-      SHOOT = 0;
-      RECIEVE = 1;
-      system("clear");
-    }
     
+    }
+
     sleep(1);
 
     while (RECIEVE && GAME) {
@@ -120,7 +121,7 @@ int main() {
       /* GET UPDATED BOARD */
       lock(SEMID_B, EMPT);
       lock(SEMID_B, MUTX);
-      board_print(user->board, 1, fd_board);
+      board_print(user, 1, fd_board);
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, FULL);
 
@@ -128,8 +129,7 @@ int main() {
 
       lock(SEMID_B, FULL);
       lock(SEMID_B, MUTX);
-      get_board(fd_board);
-      // fflush(0);
+      // get_board(fd_board);
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, EMPT);
 
@@ -148,10 +148,23 @@ int main() {
         char x[4];
         char y[4];
 
-        if(!getCoordinates(BUFFER, x, y)) {
-          strcpy(BUFFER, "MISS");
-        } 
+        if(!getCoordinates(BUFFER, x, y) || isOutOfBoard(atoi(x)) || isOutOfBoard(atoi(y))) {
+          strcpy(BUFFER, "FAILED");
+          SHOOT = 1;
+          RECIEVE = 0;
+        } else {
+          int success = shoot(user, atoi(x), atoi(y));
 
+          if(success == 0){
+            SHOOT = 1;
+            RECIEVE = 0;
+            strcpy(BUFFER, "MISS");
+          } else {
+            strcpy(BUFFER, "HIT");
+          }
+        }
+
+        
         #ifdef DEBUG
         printf("%s\n", BUFFER);
         #endif
@@ -164,9 +177,8 @@ int main() {
 
       // WRITE
       w_shoot(SEMID, fd_shoot, BUFFER);
+
       sleep(1);
-      SHOOT = 1;
-      RECIEVE = 0;
       system("clear");
     }
 
