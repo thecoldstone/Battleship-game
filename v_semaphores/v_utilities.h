@@ -20,8 +20,12 @@
 #define _UTILITIES_H
 
 #define DEBUG
+// #define DEBUG_FILE_BOARD
+
 #define FILE_SHOOT  "shoot.txt"
 #define FILE_BOARD  "board.txt"
+
+#define MODES O_RDWR | O_CREAT | O_TRUNC
 
 // #define FILE_GAME FILE_SHOOT
 
@@ -29,7 +33,8 @@
 enum {MUTX, FULL, EMPT};
 
 /* Buffer for communication between two users */
-char BUFFER[128];
+char BUFFER[10];
+char BUFFER_BOARD[2000];
 
 int SEMID;
 int SEMID_B;
@@ -63,6 +68,6 @@ void w_shoot(int semid, int fd, char *buf);
  * @param key - key derived from FILE
  * @return Id of set of semaphore
  */
-int init_v_system(const char* f_name);
+int init_v_system(const char* f_name, int buffer_size);
 
 #endif

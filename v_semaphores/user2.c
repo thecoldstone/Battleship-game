@@ -2,44 +2,84 @@
 #include "game.h"
 
 int main() {
-  int fd_shoot = open(FILE_SHOOT, O_RDWR | O_CREAT);
-  SEMID = init_v_system(FILE_SHOOT);
+  int fd_shoot = open(FILE_SHOOT, MODES);
+  SEMID = init_v_system(FILE_SHOOT, sizeof(BUFFER));
 
-  int fd_board = open(FILE_BOARD, O_RDWR | O_CREAT);
-  SEMID_B = init_v_system(FILE_BOARD);
+  int fd_board = open(FILE_BOARD, MODES);
+  SEMID_B = init_v_system(FILE_BOARD, sizeof(BUFFER_BOARD));
   
   int SHOOT = 0;
   int RECIEVE = 1;
   int GAME = 1;
 
-  // User* user = init_game(2);
-  // printf("Press 'enter' once you are ready\n");
-  // getchar();
+  User* user = init_game(2);
+  printf("Press 'enter' once you are ready\n");
+  getchar();
 
-  // system("clear");
+  system("clear");
+
+  #ifdef DEBUG_FILE_BOARD
+  /* GET UPDATED BOARD */
+  lock(SEMID_B, EMPT);
+  lock(SEMID_B, MUTX);
+  board_print(user->board, 1, fd_board);
+  fflush(0);
+  unlock(SEMID_B, MUTX);
+  unlock(SEMID_B, FULL);
+  
+  sleep(1);
+
+  lock(SEMID_B, FULL);
+  lock(SEMID_B, MUTX);
+  get_board(fd_board);
+  fflush(0);
+  unlock(SEMID_B, MUTX);
+  unlock(SEMID_B, EMPT);
+
+  sleep(1);
+
+  /* GET UPDATED BOARD */
+  lock(SEMID_B, FULL);
+  lock(SEMID_B, MUTX);
+  get_board(fd_board);
+  fflush(0);
+  unlock(SEMID_B, MUTX);
+  unlock(SEMID_B, EMPT);
+
+  sleep(1);
+
+  lock(SEMID_B, EMPT);
+  lock(SEMID_B, MUTX);
+  board_print(user->board, 1, fd_board);
+  fflush(0);
+  unlock(SEMID_B, MUTX);
+  unlock(SEMID_B, FULL);
+
+  sleep(1);
+  #endif
 
   /* Game Logic */
   while(GAME) {
 
     while (RECIEVE) {
-
-      strcpy(BUFFER, "Board2");
-      w_shoot(SEMID_B, fd_board, BUFFER);
       
+      lock(SEMID_B, EMPT);
+      lock(SEMID_B, MUTX);
+      board_print(user->board, 1, fd_board);
+      unlock(SEMID_B, MUTX);
+      unlock(SEMID_B, FULL);
+
       sleep(1);
 
       lock(SEMID_B, FULL);
       lock(SEMID_B, MUTX);
-      read(fd_board, BUFFER, sizeof(BUFFER));
-      printf("%s\n", BUFFER);
+      get_board(fd_board);
       fflush(0);
-      stpcpy(BUFFER, "");
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, EMPT);
 
       sleep(1);
 
-      // getStatus(user);
       lock(SEMID, FULL);
       lock(SEMID, MUTX);
       read(fd_shoot, BUFFER, sizeof(BUFFER));
@@ -69,7 +109,7 @@ int main() {
       sleep(1);
       SHOOT = 1;
       RECIEVE = 0;
-      // system("clear");
+      system("clear");
     }
    
     sleep(1);
@@ -79,17 +119,20 @@ int main() {
       /* GET UPDATED BOARD */
       lock(SEMID_B, FULL);
       lock(SEMID_B, MUTX);
-      read(fd_board, BUFFER, sizeof(BUFFER));
-      printf("%s\n", BUFFER);
-      fflush(0);
+      get_board(fd_board);
+      // fflush(0);
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, EMPT);
 
       sleep(1);
 
-      strcpy(BUFFER, "Board1");
-      w_shoot(SEMID_B, fd_board, BUFFER);
-      strcpy(BUFFER, "");
+      lock(SEMID_B, EMPT);
+      lock(SEMID_B, MUTX);
+      board_print(user->board, 1, fd_board);
+      unlock(SEMID_B, MUTX);
+      unlock(SEMID_B, FULL);
+
+      sleep(1);
 
       /* SHOOT */
       printf("Enter coordinates to shoot: ");
@@ -117,14 +160,14 @@ int main() {
       sleep(1);
       SHOOT = 0;
       RECIEVE = 1;
-      // system("clear");
+      system("clear");
     }
 
   }
 
   /* Deallocation */
-  // boardDestroy(user->board);
-  // userDestroy(user);
+  boardDestroy(user->board);
+  userDestroy(user);
   /* Delete Semaphore */
   if(semctl(SEMID, 0, IPC_RMID) == -1) {
     end_program("semctl SEMID");

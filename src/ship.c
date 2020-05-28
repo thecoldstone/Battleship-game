@@ -9,6 +9,19 @@
 #include <stdlib.h>
 #include "ship.h"
 
+Ship2* shipCreate2(tTypeShip type){
+
+    Ship2* ship = (Ship2*) malloc(sizeof(Ship2));
+    ship->type = type;
+    if(!ship) {
+        fprintf(stderr, "[INTERNAL ERROR]Failed Allocation.\n");
+        return NULL;
+    }
+
+    return ship;
+
+}
+
 Ship* shipCreate(tTypeShip type){
     
     BITMAP_SIZE = 3;

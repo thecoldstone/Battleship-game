@@ -34,7 +34,7 @@ Cell** boardInit(int size) {
                 newBoard[i][j].isBorder = false;
         }
     }
- 
+    
     return newBoard;
 }
 

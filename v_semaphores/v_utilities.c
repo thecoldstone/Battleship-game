@@ -12,6 +12,7 @@ void lock(int semid, int sem_num) {
   semb.sem_op = -1;
   semb.sem_flg = SEM_UNDO;
   if (semop(semid, &semb, 1) == -1) {
+    printf("[FAILED] %d\n", sem_num);
     end_program("semop lock");
   }
 
@@ -32,12 +33,12 @@ void unlock(int semid, int sem_num) {
 void w_shoot(int semid, int fd, char *buf) {
     lock(semid, EMPT);
     lock(semid, MUTX);
-    write(fd, buf, sizeof(BUFFER));
+    write(fd, buf, sizeof(buf));
     unlock(semid, MUTX);
     unlock(semid, FULL);
 }
 
-int init_v_system(const char* f_name){
+int init_v_system(const char* f_name, int buffer_size){
 
   key_t key;
   int semid;
@@ -45,7 +46,7 @@ int init_v_system(const char* f_name){
   unsigned short array[3];
   array[MUTX] = 1;
   array[FULL] = 0;
-  array[EMPT] = sizeof(BUFFER);
+  array[EMPT] = buffer_size;
   sop.array = array;
   // fprintf(stdout, "%d\n", sizeof(BUFFER));  
 

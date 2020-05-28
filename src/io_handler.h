@@ -41,4 +41,6 @@ int inputMode();
  */ 
 void getStatus(User* user);
 
+int getCoordinates(char *s, char *x, char *y);
+
 #endif

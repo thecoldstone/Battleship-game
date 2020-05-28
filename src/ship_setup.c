@@ -8,7 +8,7 @@
 
 #include "ship_setup.h"
 
-static int genRandomNumber(int lowest, int highest){
+int genRandomNumber(int lowest, int highest){
 
     if(lowest == 0){
         return rand() % highest;
@@ -20,7 +20,7 @@ static int genRandomNumber(int lowest, int highest){
 
 }
 
-static void initShipsRandomly(Cell** board){
+void initShipsRandomly(Cell** board){
  
     int x, y, type, rotation;
 
@@ -39,7 +39,7 @@ static void initShipsRandomly(Cell** board){
 
 }
 
-static void initShipsManually(Cell** board){
+void initShipsManually(Cell** board){
     
     int i = 0;
 

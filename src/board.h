@@ -8,9 +8,6 @@
 #ifndef _BOARD_H
 #define _BOARD_H
 
-int BOARD_SIZE; 
-int NUMBER_OF_SHIPS;
-
 #include <stdbool.h>
 #include "ship.h"
 #include "utilities.h"

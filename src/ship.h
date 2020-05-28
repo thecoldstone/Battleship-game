@@ -18,12 +18,26 @@ typedef enum {
     L_TETROMINO   = 4
 } tTypeShip;
 
+typedef struct tBitMap{
+    char** bitmap;
+} BitMap;
+
+typedef struct tShip2{
+    int hp;
+    int type;
+    BitMap* map;
+} Ship2;
+
 typedef struct tShip{
     int hp;
     int type;
     int size;
     char bitmap[3][3]; // Set to be constant. [Reason: Memleeks]
 } Ship;
+
+
+/****/
+Ship2* shipCreate2(tTypeShip type);
 
 /**
  * @brief Creat a ship according to the type

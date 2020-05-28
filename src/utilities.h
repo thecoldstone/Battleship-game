@@ -17,5 +17,7 @@
 #define CYAN "\x1B[0;36m"
 
 int BORDER_ON;
+int BOARD_SIZE; 
+int NUMBER_OF_SHIPS;
 
 #endif

@@ -73,9 +73,36 @@ void getStatus(User* user){
         activeUser = 1;
     }
 
-    printf("\tACTIVE USER: %i\n\t-------------\n", activeUser);
-    printf("\tYOU ARE ATTACKING THE USER: %i\n\t-------------\n", user->id);
+    // printf("\tACTIVE USER: %i\n\t-------------\n", activeUser);
+    // printf("\tYOU ARE ATTACKING THE USER: %i\n\t-------------\n", user->id);
     boardPrint(user->board, true);
     printf("\n\n\n\n\n");
 
+}
+
+int getCoordinates(char *s, char *x, char *y){
+
+    int j = 0;  
+    int comma = 0;
+
+    for(unsigned long i = 0; i < strlen(s); i++) {
+        
+        if(s[i] >= '0' && s[i] <= '9') {
+            if (comma == 0) {
+                x[j] = s[i];
+                j++;
+            } else if (comma == 1) {
+                y[j] = s[i];
+                j++;
+            }           
+        } else if (s[i] == ',') {
+           j = 0;
+           comma = 1;
+        } else {
+            fprintf(stderr, RED"[ERROR]"RESET_COLOR" Not correct coordinates\n");
+            return 0;
+        }
+    }
+
+    return 1;
 }
