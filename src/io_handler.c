@@ -80,19 +80,20 @@ void getStatus(User* user){
 
 }
 
-int getCoordinates(char *s, char *x, char *y){
+int getCoordinates(char *s, int *x, int *y){
 
     int j = 0;  
     int comma = 0;
+    char x_c[4], y_c[4];
 
     for(unsigned long i = 0; i < strlen(s); i++) {
         
         if(s[i] >= '0' && s[i] <= '9') {
             if (comma == 0) {
-                x[j] = s[i];
+                x_c[j] = s[i];
                 j++;
             } else if (comma == 1) {
-                y[j] = s[i];
+                y_c[j] = s[i];
                 j++;
             }           
         } else if (s[i] == ',') {
@@ -111,5 +112,25 @@ int getCoordinates(char *s, char *x, char *y){
         }
     }
 
+    *x = atoi(x_c);
+    *y = atoi(y_c);
+
     return 1;
+}
+
+int inputCoordinates(char *buf) {
+
+    fprintf(stdout, "Enter coordinates [x,y]: ");
+    fgets(buf, sizeof(buf), stdin);
+
+    if(buf[strlen(buf) - 1] == '\n') {
+        buf[strlen(buf) - 1] = '\0';
+    } else {
+        return 1;
+    }
+
+    fflush(0);
+
+    return 0;
+
 }
