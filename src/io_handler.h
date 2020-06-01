@@ -41,9 +41,24 @@ int inputMode();
  */ 
 void getStatus(User* user);
 
-
+/**
+ * @brief Analyze coordinates whether they are correct
+ * 
+ * @param s - string (input)
+ * @param x - x axe coordinate
+ * @param y - y axe coordinate
+ * 
+ * @return 1 whether the coordinates are correct otherwise 0
+ */ 
 int getCoordinates(char *s, int *x, int *y);
 
+/**
+ * @brief Get coordinates from input into buffer
+ * 
+ * @param buf - buffer
+ * 
+ * @return 1 whether the input is correct otherwise 0
+ */
 int inputCoordinates(char *buf);
 
 #endif
