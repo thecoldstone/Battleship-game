@@ -20,10 +20,11 @@ void board_print(User* user, bool noShip, int fd) {
     
     char buffer[256];
     memset(buffer, 0, strlen(buffer));
+    lseek(fd, 0, SEEK_SET);
 
     write(fd, "\t    ", 6);
 
-    for(int i = 0; i < BOARD_SIZE; i++) {
+    for(int i = 0; i < BOARD_SIZE; ++i) {
         if(i >= 10){
             sprintf(&buffer[strlen(buffer)], " %d ", i);
         } else{
@@ -36,7 +37,7 @@ void board_print(User* user, bool noShip, int fd) {
 
     write(fd, "\n", 2);
 
-    for(int i = 0; i < BOARD_SIZE; i++) {
+    for(int i = 0; i < BOARD_SIZE; ++i) {
         
         if(i < 10){
             sprintf(&buffer[strlen(buffer)], "\t %i", i);
@@ -44,7 +45,7 @@ void board_print(User* user, bool noShip, int fd) {
             sprintf(&buffer[strlen(buffer)], "\t%i", i);
         }
 
-        for(int j = 0; j < BOARD_SIZE; j++) {
+        for(int j = 0; j < BOARD_SIZE; ++j) {
             sprintf(&buffer[strlen(buffer)], " | ");
 
             /***PRINT SHIP TYPE***/
@@ -87,27 +88,29 @@ void board_print(User* user, bool noShip, int fd) {
             }
 
             write(fd, buffer, strlen(buffer));
-            memset(buffer, 0,strlen(buffer));
+            memset(buffer, 0, strlen(buffer));
         }
 
         sprintf(&buffer[strlen(buffer)], " |\n");
         write(fd, buffer, strlen(buffer));
-        memset(buffer, 0,strlen(buffer));
+        memset(buffer, 0, strlen(buffer));
 
     }
 
-    write(fd, "\n", 2);
+    write(fd, "\n\n", 3);
 }
 
 int get_board(int fd){
 
     char c;
 
-    lseek(fd, 0, SEEK_CUR);
+    lseek(fd, 0, SEEK_SET);
 
     while(read(fd, &c, 1)) {
         write(fileno(stdout), &c, 1);
     }
+
+    fflush(0);
 
     return 1;
 

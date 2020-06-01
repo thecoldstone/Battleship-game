@@ -25,7 +25,9 @@
 #define FILE_SHOOT  "shoot.txt"
 #define FILE_BOARD  "board.txt"
 
-#define MODES O_RDWR | O_CREAT | O_TRUNC
+#define MODES O_CREAT | O_RDWR | O_TRUNC
+
+#define SLEEP usleep(4500)
 
 // #define FILE_GAME FILE_SHOOT
 
@@ -34,7 +36,7 @@ enum {MUTX, FULL, EMPT};
 
 /* Buffer for communication between two users */
 char BUFFER[20];
-char BUFFER_BOARD[200];
+char BUFFER_BOARD[300];
 
 int SEMID;
 int SEMID_B;

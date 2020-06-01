@@ -11,8 +11,11 @@ int main() {
   int SHOOT = 0;
   int RECIEVE = 1;
   int GAME = 1;
+  int WON = 0;
 
   User* user = init_game(2);
+
+  SLEEP;
   printf("Press 'enter' once you are ready\n");
   getchar();
 
@@ -22,7 +25,7 @@ int main() {
   /* GET UPDATED BOARD */
   lock(SEMID_B, EMPT);
   lock(SEMID_B, MUTX);
-  board_print(user->board, 1, fd_board);
+  board_print(user, 1, fd_board);
   fflush(0);
   unlock(SEMID_B, MUTX);
   unlock(SEMID_B, FULL);
@@ -50,7 +53,7 @@ int main() {
 
   lock(SEMID_B, EMPT);
   lock(SEMID_B, MUTX);
-  board_print(user->board, 1, fd_board);
+  board_print(user, 1, fd_board);
   fflush(0);
   unlock(SEMID_B, MUTX);
   unlock(SEMID_B, FULL);
@@ -69,60 +72,63 @@ int main() {
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, FULL);
 
-      sleep(1);
+      SLEEP;
 
       lock(SEMID_B, FULL);
       lock(SEMID_B, MUTX);
       get_board(fd_board);
-      fflush(0);
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, EMPT);
 
-      sleep(1);
+      SLEEP;
 
       lock(SEMID, FULL);
       lock(SEMID, MUTX);
       read(fd_shoot, BUFFER, sizeof(BUFFER));
-      
-      if(strcmp(BUFFER, "exit") == 0) {
-        GAME = 0;
-      } else {
-        char x[4];
-        char y[4];
+      printf("%s\n", BUFFER);
 
-        if(!getCoordinates(BUFFER, x, y) || isOutOfBoard(atoi(x)) || isOutOfBoard(atoi(y))) {
+      if(strcmp(BUFFER, "exit") == 0) {
+        RECIEVE = 0;
+        GAME = 0;
+      }  else {
+        
+        int x, y;
+
+        if(!getCoordinates(BUFFER, &x, &y) || isOutOfBoard(x) || isOutOfBoard(y)) {
           strcpy(BUFFER, "FAILED");
           SHOOT = 1;
           RECIEVE = 0;
         } else {
-          int success = shoot(user, atoi(x), atoi(y));
+          int success = shoot(user, x, y);
 
           if(success == 0){
             SHOOT = 1;
             RECIEVE = 0;
             strcpy(BUFFER, "MISS");
           } else {
-            strcpy(BUFFER, "HIT");
+            if(user->ships == 0) {
+              strcpy(BUFFER, "WON");
+              RECIEVE = 0;
+              GAME = 0;
+            } else {
+              strcpy(BUFFER, "HIT");
+            }
           }
-        }
-
-        #ifdef DEBUG
-        printf("%s\n", BUFFER);
-        #endif
-      }
+        } 
+      } 
 
       unlock(SEMID, MUTX);
       unlock(SEMID, EMPT);
       
-      sleep(1);
+      SLEEP;
 
       w_shoot(SEMID, fd_shoot, BUFFER);
 
-      sleep(1);
+      SLEEP;
       system("clear");
     }
    
-    sleep(1);
+    SLEEP;
 
     while (SHOOT && GAME) {
       
@@ -133,7 +139,7 @@ int main() {
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, EMPT);
 
-      sleep(1);
+      SLEEP;
 
       lock(SEMID_B, EMPT);
       lock(SEMID_B, MUTX);
@@ -141,38 +147,46 @@ int main() {
       unlock(SEMID_B, MUTX);
       unlock(SEMID_B, FULL);
 
-      sleep(1);
+      SLEEP;
 
       /* SHOOT */
-      printf("Enter coordinates to shoot: ");
-      scanf("%s", BUFFER);
-      printf("\n");
+      inputCoordinates(BUFFER);
       w_shoot(SEMID, fd_shoot, BUFFER);
 
-      sleep(1);
+      SLEEP;
       
       // READ
       lock(SEMID, FULL);
       lock(SEMID, MUTX);
       read(fd_shoot, BUFFER, sizeof(BUFFER));
       printf("%s\n", BUFFER);
-      fflush(0);
       unlock(SEMID, MUTX);
       unlock(SEMID, EMPT);
 
+      if(strcmp(BUFFER, "WON") == 0) {
+        WON = 1;
+        SHOOT = 0;
+        GAME = 0;
+      }
+
       if(strcmp(BUFFER, "exit") == 0) {
         GAME = 0;
-      } else if(strcmp(BUFFER, "FAILED") == 0 || strcmp(BUFFER, "MISS") == 0){
+      } else if(strcmp(BUFFER, "FAILED") == 0 || strcmp(BUFFER, "MISS") == 0){ 
         SHOOT = 0;
         RECIEVE = 1;
-      } else {
-        memset(BUFFER, 0, strlen(BUFFER));
-        sleep(1);
-        system("clear");
-      }
-    
+      } 
+     
+      memset(BUFFER, 0, strlen(BUFFER));
+      SLEEP;
+      system("clear");
     }
 
+  }
+
+  if(WON) {
+    fprintf(stdout, "WON\n");
+  } else {
+    fprintf(stdout, "LOST\n");
   }
 
   /* Deallocation */

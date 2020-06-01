@@ -27,3 +27,9 @@ clean:
 clean_test:
 	rm test
 	rm board.txt
+
+kill:
+	killall user
+	killall user2
+	ipcs -s
+	make clean

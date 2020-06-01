@@ -30,7 +30,7 @@ void unlock(int semid, int sem_num) {
 
 }
 
-void w_shoot(int semid, int fd, char *buf) {
+void w_shoot(int semid, int fd, char *buf){
     lock(semid, EMPT);
     lock(semid, MUTX);
     write(fd, buf, sizeof(buf));
