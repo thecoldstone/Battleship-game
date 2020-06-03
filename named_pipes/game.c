@@ -1,11 +1,3 @@
-/**
- * @file game.c
- * @brief Game utilities
- * @author Nikita Zhukov
- * @date 26.05.20
- * 
-*/
-
 #include "game.h"
 
 User* init_game(int id) {
@@ -24,13 +16,14 @@ User* init_game(int id) {
     return user;
 }
 
-void board_print(User* user, bool noShip, int fd) {
-    
-    char buffer[256];
-    memset(buffer, 0, strlen(buffer));
-    lseek(fd, 0, SEEK_SET);
+void board_print(Cell** board, bool noShip, int fd) {
 
-    write(fd, "\t    ", 6);
+    char *buffer = mmap(0, SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+
+    if(buffer == MAP_FAILED)
+            perror("mmap");
+
+    sprintf(&buffer[strlen(buffer)], "\t    ");
 
     for(int i = 0; i < BOARD_SIZE; ++i) {
         if(i >= 10){
@@ -40,27 +33,24 @@ void board_print(User* user, bool noShip, int fd) {
         }
     }
 
-    write(fd, buffer, strlen(buffer));
-    memset(buffer, 0,strlen(buffer));
+    sprintf(&buffer[strlen(buffer)], "\n");
 
-    write(fd, "\n", 2);
+    for(int i = 0; i < BOARD_SIZE ;i++) {
 
-    for(int i = 0; i < BOARD_SIZE; ++i) {
-        
         if(i < 10){
             sprintf(&buffer[strlen(buffer)], "\t %i", i);
         } else {
-            sprintf(&buffer[strlen(buffer)], "\t%i", i);
+            sprintf(&buffer[strlen(buffer)],  "\t%i", i);
         }
 
         for(int j = 0; j < BOARD_SIZE; ++j) {
             sprintf(&buffer[strlen(buffer)], " | ");
 
             /***PRINT SHIP TYPE***/
-            if(user->board[i][j].ship && noShip && user->board[i][j].state == NO_SHOOT) {
+            if(board[i][j].ship && noShip && board[i][j].state == NO_SHOOT) {
                 // printf("%d", board[i][j].ship->size);
 
-                switch(user->board[i][j].ship->type)
+                switch(board[i][j].ship->type)
                 {
                 case MONOMINO:
                     sprintf(&buffer[strlen(buffer)], "M");
@@ -82,7 +72,7 @@ void board_print(User* user, bool noShip, int fd) {
                 continue;
             }
             /***PRINT BOARD STATES***/
-            switch (user->board[i][j].state)
+            switch (board[i][j].state)
             {
             case HIT:
                 sprintf(&buffer[strlen(buffer)], RED"X"RESET_COLOR);
@@ -94,32 +84,22 @@ void board_print(User* user, bool noShip, int fd) {
                 sprintf(&buffer[strlen(buffer)], BLUE"~"RESET_COLOR);
                 break;
             }
-
-            write(fd, buffer, strlen(buffer));
-            memset(buffer, 0, strlen(buffer));
         }
-
         sprintf(&buffer[strlen(buffer)], " |\n");
-        write(fd, buffer, strlen(buffer));
-        memset(buffer, 0, strlen(buffer));
+    }  
 
-    }
-
-    write(fd, "\n\n", 3);
-}
-
-int get_board(int fd){
-
-    char c;
-
-    lseek(fd, 0, SEEK_SET);
-
-    while(read(fd, &c, 1)) {
-        write(fileno(stdout), &c, 1);
-    }
-
-    fflush(0);
-
-    return 1;
+    sprintf(&buffer[strlen(buffer)], "\n");
+    
+    munmap(buffer, SIZE);
 
 }
+
+// void get_board(int fd, char* buffer) {
+
+//     if(buffer == MAP_FAILED)
+//             perror("mmap");
+
+//     printf("%s\n", buffer);
+//     munmap(buffer, SIZE);
+    
+// }

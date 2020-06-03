@@ -1,11 +1,3 @@
-/**
- * @file game.h
- * @brief API Game
- * @author Nikita Zhukov
- * @date 26.05.20
- * 
-*/
-
 #include <time.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -23,6 +15,8 @@
 #ifndef _GAME_H
 #define _GAME_H
 
+#define SIZE 0x1000 
+
 /**
  * @brief Initialize user
  * 
@@ -30,20 +24,6 @@
  */
 User* init_game(int id);
 
-/**
- * @brief Print board into file descriptor
- * 
- * @param user 
- * @param noShip - print with ships or not
- * @param fd - file descriptor
- */
-void board_print(User* user, bool noShip, int fd);
-
-/**
- * @brief Print board into stdin
- * 
- * @param fd - file descriptor
- */
-int get_board(int fd);
+void board_print(Cell** board, bool noShip, int fd);
 
 #endif

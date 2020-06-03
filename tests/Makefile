@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS =  -std=c99 -g -Werror -Wextra -pedantic
-SRC = *.c
-OBJ = ship
 
 build:
-	$(CC) $(CFLAGS) -o $(OBJ)  $(SRC)
+	$(CC) $(CFLAGS) -o mmap_w mmap_w.c
+	$(CC) $(CFLAGS) -o mmap_r mmap_r.c
 
 clean:
-	rm ship
+	rm mmap_w
+	rm mmap_r
 	rm -rf *.dSYM

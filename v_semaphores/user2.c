@@ -1,3 +1,11 @@
+/**
+ * @file user2.c
+ * @brief User two
+ * @author Nikita Zhukov
+ * @date 26.05.20
+ * 
+*/
+
 #include "v_utilities.h"
 #include "game.h"
 
@@ -20,46 +28,6 @@ int main() {
   getchar();
 
   system("clear");
-
-  #ifdef DEBUG_FILE_BOARD
-  /* GET UPDATED BOARD */
-  lock(SEMID_B, EMPT);
-  lock(SEMID_B, MUTX);
-  board_print(user, 1, fd_board);
-  fflush(0);
-  unlock(SEMID_B, MUTX);
-  unlock(SEMID_B, FULL);
-  
-  sleep(1);
-
-  lock(SEMID_B, FULL);
-  lock(SEMID_B, MUTX);
-  get_board(fd_board);
-  fflush(0);
-  unlock(SEMID_B, MUTX);
-  unlock(SEMID_B, EMPT);
-
-  sleep(1);
-
-  /* GET UPDATED BOARD */
-  lock(SEMID_B, FULL);
-  lock(SEMID_B, MUTX);
-  get_board(fd_board);
-  fflush(0);
-  unlock(SEMID_B, MUTX);
-  unlock(SEMID_B, EMPT);
-
-  sleep(1);
-
-  lock(SEMID_B, EMPT);
-  lock(SEMID_B, MUTX);
-  board_print(user, 1, fd_board);
-  fflush(0);
-  unlock(SEMID_B, MUTX);
-  unlock(SEMID_B, FULL);
-
-  sleep(1);
-  #endif
 
   /* Game Logic */
   while(GAME) {

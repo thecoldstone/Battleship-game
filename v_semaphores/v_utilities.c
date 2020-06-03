@@ -1,3 +1,11 @@
+/**
+ * @file utilities.c
+ * @brief V Semaphore System utilities
+ * @author Nikita Zhukov
+ * @date 26.05.20
+ * 
+*/
+
 #include "v_utilities.h"
 
 void end_program(const char *msg) {

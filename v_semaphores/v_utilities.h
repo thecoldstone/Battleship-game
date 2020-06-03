@@ -51,6 +51,7 @@ void end_program(const char *msg);
 /**
  * @brief Lock semaphore
  * 
+ * @param semid - id of semaphore set
  * @param sem_num - number of semaphore in V Semaphore System 
  */
 void lock(int semid, int sem_num);
@@ -58,16 +59,27 @@ void lock(int semid, int sem_num);
 /**
  * @brief Unlock semaphore
  * 
+ * @param semid - id of semaphore set
  * @param sem_num - number of semaphore in V Semaphore System 
  */
 void unlock(int semid, int sem_num);
 
+/**
+ * @brief Shoot
+ * API for function shoot in terms of V System
+ * 
+ * @param semid - id of semaphore set
+ * @param fd - file descriptor to where shoot be written
+ * @param buf - string with coordinates
+ */ 
 void w_shoot(int semid, int fd, char *buf);
 
 /**
  * @brief Initiaization of V System
  * 
- * @param key - key derived from FILE
+ * @param f_name - file name
+ * @param buffer_size 
+ * 
  * @return Id of set of semaphore
  */
 int init_v_system(const char* f_name, int buffer_size);
