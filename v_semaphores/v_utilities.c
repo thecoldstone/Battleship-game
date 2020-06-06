@@ -8,6 +8,21 @@
 
 #include "v_utilities.h"
 
+#if ! defined(__FreeBSD__) && ! defined(__OpenBSD__) && \
+                ! defined(__sgi) && ! defined(__APPLE__)
+                /* Some implementations already declare this union */
+
+union semun {                   /* Used in calls to semctl() */
+    int                 val;
+    struct semid_ds *   buf;
+    unsigned short *    array;
+#if defined(__linux__)
+    struct seminfo *    __buf;
+#endif
+};
+
+#endif
+
 void end_program(const char *msg) {
   perror(msg);
   exit(1);
@@ -51,8 +66,8 @@ int init_v_system(const char* f_name, int buffer_size){
 
   key_t key;
   int semid;
-  union semun sop;
   unsigned short array[3];
+  union semun sop;
   array[MUTX] = 1;
   array[FULL] = 0;
   array[EMPT] = buffer_size;

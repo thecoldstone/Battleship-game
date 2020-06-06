@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+
 #ifndef _UTILITIES_H
 #define _UTILITIES_H
 
@@ -27,9 +28,8 @@
 
 #define MODES O_CREAT | O_RDWR | O_TRUNC
 
+#define _BSD_SOURCE
 #define SLEEP usleep(4500)
-
-// #define FILE_GAME FILE_SHOOT
 
 /* Definition for set of semaphores */
 enum {MUTX, FULL, EMPT};
