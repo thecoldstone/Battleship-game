@@ -65,14 +65,6 @@ int inputShips(int size){
 
 void getStatus(User* user){
     
-    int activeUser;
-
-    if(user->id == 1){
-        activeUser = 2;
-    } else {
-        activeUser = 1;
-    }
-
     // printf("\tACTIVE USER: %i\n\t-------------\n", activeUser);
     // printf("\tYOU ARE ATTACKING THE USER: %i\n\t-------------\n", user->id);
     boardPrint(user->board, true);

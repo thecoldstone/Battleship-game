@@ -115,7 +115,7 @@ int get_board(int fd){
     lseek(fd, 0, SEEK_SET);
 
     while(read(fd, &c, 1)) {
-        write(fileno(stdout), &c, 1);
+        write(STDOUT_FILENO, &c, 1);
     }
 
     fflush(0);

@@ -28,7 +28,8 @@
 
 #define MODES O_CREAT | O_RDWR | O_TRUNC
 
-#define _BSD_SOURCE
+#define _XOPEN_SOURCE 500
+
 #define SLEEP usleep(4500)
 
 /* Definition for set of semaphores */
