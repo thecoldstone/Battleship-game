@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -std=c99 -Wall -Wextra -Werror
+CFLAGS = -std=c99 -Wall -Wextra
 
 BOARD = ../src/board.c 
 SHIP  = ../src/ship.c 

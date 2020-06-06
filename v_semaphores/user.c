@@ -6,6 +6,8 @@
  * 
 */
 
+#define _BSD_SOURCE
+
 #include "v_utilities.h"
 #include "game.h"
 
