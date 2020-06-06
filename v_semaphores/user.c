@@ -9,7 +9,6 @@
 #include "v_utilities.h"
 #include "game.h"
 
-
 int main() {
   int fd_shoot = open(FILE_SHOOT, MODES);
   SEMID = init_v_system(FILE_SHOOT, sizeof(BUFFER));

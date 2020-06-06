@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#define _XOPEN_SOURCE 500
 
 #ifndef _UTILITIES_H
 #define _UTILITIES_H
@@ -27,8 +28,6 @@
 #define FILE_BOARD  "board.txt"
 
 #define MODES O_CREAT | O_RDWR | O_TRUNC
-
-#define _XOPEN_SOURCE 500
 
 #define SLEEP usleep(4500)
 
