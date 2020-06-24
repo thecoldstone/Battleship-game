@@ -1,57 +1,103 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h> 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h> 
+#include "tcp_utilities.h"
+#include "game.h"
 
-void error(char *msg)
-{
-    perror(msg);
-    exit(0);
-}
-
-int main(int argc, char *argv[])
-{
-    int sockfd, portno, n;
-
+int main(){
+    int sockfd, n;
     struct sockaddr_in serv_addr;
-    struct hostent *server;
 
-    char buffer[256];
-    if (argc < 3) {
-       fprintf(stderr,"usage %s hostname port\n", argv[0]);
-       exit(0);
+    User* user = init_game(2);
+
+    if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+        error("[ERROR] opening socket");
+
+    bzero((char*) &serv_addr, sizeof(serv_addr));
+
+    serv_addr.sin_family = AF_INET; 
+    serv_addr.sin_addr.s_addr = inet_addr("127.0.0.1"); 
+    serv_addr.sin_port = htons(PORT); 
+
+    if((connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr))) < 0){
+        error("[ERROR] connection with the server failed...");
+    } else {
+        printf("[+]connected...");
     }
-    portno = atoi(argv[2]);
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) 
-        error("ERROR opening socket");
-    server = gethostbyname(argv[1]);
-    if (server == NULL) {
-        fprintf(stderr,"ERROR, no such host\n");
-        exit(0);
+
+    GAME = 1;
+    // SHOOT = 0;
+    // RECEIVE = 1;
+
+    while(GAME){
+        
+        bzero(BUFFER, 256);
+
+        if((n = read(sockfd, BUFFER, 255)) < 0) {
+            error("[ERROR] reading from socket");
+        } else {
+            if (strncmp("exit", BUFFER, 4) == 0) { 
+                    printf("Server Exit...\n"); 
+                    // GAME = 0;
+            }
+            printf("%s", BUFFER);
+        }
+
+        board_print(user, 1, sockfd);
+
+        // while(SHOOT){
+            
+        //     board_print(user, 1, sockfd);
+        //     bzero(BUFFER, 256);
+
+        //     inputCoordinates(BUFFER);
+        //     write(sockfd, BUFFER, sizeof(BUFFER));
+
+        //     if((n = read(sockfd, BUFFER, 255)) < 0) 
+        //         error("[ERROR] reading from socket");
+        //     else { 
+        //         if (strncmp("exit", BUFFER, 4) == 0) { 
+        //             printf("Server Exit...\n"); 
+        //             SHOOT = 0;
+        //             GAME = 0;
+        //         } else if(strcmp(BUFFER, "WON") == 0) {
+        //             WON = 1;
+        //             SHOOT = 0;
+        //             GAME = 0;
+        //         } else if(strcmp(BUFFER, "FAILED") == 0 || strcmp(BUFFER, "MISS") == 0){ 
+        //             SHOOT = 0;
+        //             RECEIVE = 1;
+        //         }
+        //     }
+
+        // }
+
+        // while(RECEIVE && GAME) {
+            
+        //     board_print(user, 1, sockfd);
+        //     bzero(BUFFER, 256);
+
+        //     if((n = read(sockfd, BUFFER, 255)) < 0) 
+        //         error("[ERROR] reading from socket");
+        //     else { 
+        //         if (strncmp("exit", BUFFER, 4) == 0) { 
+        //             printf("Server Exit...\n"); 
+        //             RECEIVE = 0;
+        //             GAME = 0;
+        //         } else if(strcmp(BUFFER, "WON") == 0) {
+        //             WON = 1;
+        //             SHOOT = 0;
+        //             GAME = 0;
+        //         } else if(strcmp(BUFFER, "FAILED") == 0 || strcmp(BUFFER, "MISS") == 0){ 
+        //             SHOOT = 0;
+        //             RECEIVE = 1;
+        //         }
+        //     }
+
+        // }
     }
-    bzero((char *) &serv_addr, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    bcopy((char *)server->h_addr, 
-         (char *)&serv_addr.sin_addr.s_addr,
-         server->h_length);
-    serv_addr.sin_port = htons(portno);
-    if (connect(sockfd,(struct sockaddr *)&serv_addr,sizeof(serv_addr)) < 0) 
-        error("ERROR connecting");
-    printf("Please enter the message: ");
-    bzero(buffer,256);
-    fgets(buffer,255,stdin);
-    n = write(sockfd,buffer,strlen(buffer));
-    if (n < 0) 
-         error("ERROR writing to socket");
-    bzero(buffer,256);
-    n = read(sockfd,buffer,255);
-    if (n < 0) 
-         error("ERROR reading from socket");
-    printf("%s\n",buffer);
+
+    /* Deallocation */
+    boardDestroy(user->board);
+    userDestroy(user);
+    close(sockfd);
     return 0;
+
 }

@@ -4,6 +4,7 @@
 #define GAME_H
 
 int GAME;
+int WON;
 int SHOOT;
 int RECEIVE;
 

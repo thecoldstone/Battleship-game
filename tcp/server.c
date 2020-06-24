@@ -2,17 +2,12 @@
 #include "game.h"
 
 int main(){
-    int sockfd, newsockfd;
+    int sockfd, newsockfd, n;
     socklen_t clilen;
     struct sockaddr_in serv_addr, cli_addr;
-    int n;
-
-    User* user = init_game(1);
-    GAME = 1;
 
     // create a socket
-    sockfd = socket(AF_INET, SOCK_STREAM, 0); 
-    if(sockfd < 0)
+    if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
         error("[ERROR] opening socket");
 
     // clear address structure
@@ -22,10 +17,10 @@ int main(){
     // server byte order
     serv_addr.sin_family = AF_INET;
     // automatically be filled with current host's IP address
-    serv_addr.sin_addr.s_addr = INADDR_ANY;
+    serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     // convert short integer value for port must be converted into network byte order
-    serv_addr.sin_port = htons(PORT);
-
+    serv_addr.sin_port = htons(PORT);    
+        
     // This bind() call will bind the socket to the current IP address on port
     if((bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr))) != 0)
         error("[ERROR] on binding");
@@ -36,6 +31,8 @@ int main(){
 
     clilen = sizeof(cli_addr);
 
+    User* user = init_game(1);
+
     // Accept the data packet from client 
     if((newsockfd = accept(sockfd, (struct sockaddr *) &cli_addr, &clilen)) < 0) {
         error("[ERROR] on accept");
@@ -43,24 +40,65 @@ int main(){
         printf("server: got connection from %s port %d\n", inet_ntoa(cli_addr.sin_addr), ntohs(cli_addr.sin_port));
     }
 
-    while(GAME){
-        board_print(user, 1, newsockfd);
-        // send(newsockfd, "Hello, world!\n", 13, 0);
-    
-        bzero(BUFFER, 256);
+    GAME = 1;
+    SHOOT = 1;
+    RECEIVE = 0;
 
-        if((n = read(newsockfd, BUFFER, 255)) < 0) 
-            error("[ERROR] reading from socket");
-        else {
-             // if msg contains "Exit" then server exit and chat ended. 
-            if (strncmp("exit", BUFFER, 4) == 0) { 
-                printf("Server Exit...\n"); 
-                break; 
-            } else {
-                printf("Received message: %s\n", BUFFER);
+    while(GAME){
+
+        while(SHOOT){
+            
+            // board_print(user, 1, newsockfd);
+            bzero(BUFFER, 256);
+
+            inputCoordinates(BUFFER);
+            write(newsockfd, BUFFER, sizeof(BUFFER));
+
+            if((n = read(newsockfd, BUFFER, 255)) < 0) 
+                error("[ERROR] reading from socket");
+            else { 
+                printf("%s\n", BUFFER);
+                if (strncmp("exit", BUFFER, 4) == 0) { 
+                    printf("Server Exit...\n"); 
+                    SHOOT = 0;
+                    GAME = 0;
+                } else if(strcmp(BUFFER, "WON") == 0) {
+                    WON = 1;
+                    SHOOT = 0;
+                    GAME = 0;
+                } else if(strcmp(BUFFER, "FAILED") == 0 || strcmp(BUFFER, "MISS") == 0){ 
+                    SHOOT = 0;
+                    RECEIVE = 1;
+                }
             }
+
         }
 
+        // while(RECEIVE && GAME) {
+
+        //     get_board(newsockfd);
+            
+        //     board_print(user, 1, newsockfd);
+        //     bzero(BUFFER, 256);
+
+        //     if((n = read(newsockfd, BUFFER, 255)) < 0) 
+        //         error("[ERROR] reading from socket");
+        //     else { 
+        //         if (strncmp("exit", BUFFER, 4) == 0) { 
+        //             printf("Server Exit...\n"); 
+        //             RECEIVE = 0;
+        //             GAME = 0;
+        //         } else if(strcmp(BUFFER, "WON") == 0) {
+        //             WON = 1;
+        //             SHOOT = 0;
+        //             GAME = 0;
+        //         } else if(strcmp(BUFFER, "FAILED") == 0 || strcmp(BUFFER, "MISS") == 0){ 
+        //             SHOOT = 0;
+        //             RECEIVE = 1;
+        //         }
+        //     }
+
+        // }
     }
 
     /* Deallocation */

@@ -10,7 +10,7 @@
 #ifndef TCP_UTILITIES_H
 #define TCP_UTILITIES_H
 
-#define PORT 8000
+#define PORT 8001
 
 char BUFFER[256];
 

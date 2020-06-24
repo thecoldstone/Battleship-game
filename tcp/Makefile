@@ -16,6 +16,7 @@ TCP = tcp_utilities.c
 
 build:
 	$(CC) $(CFLAGS) -o server server.c $(GAME) $(TCP)
+	$(CC) $(CFLAGS) -o client client.c $(GAME) $(TCP)
 
 clean:
 	rm server
